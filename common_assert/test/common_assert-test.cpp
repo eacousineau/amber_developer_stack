@@ -2,17 +2,17 @@
 
 #include <common_assert.hpp>
 
-TEST(common_assert, NoError)
+TEST(test, NoError)
 {
     EXPECT_NO_THROW(common_assert(true));
 }
 
-TEST(common_assert, Error)
+TEST(test, Error)
 {
     EXPECT_THROW(common_assert(false), common::assert_error);
 }
 
-TEST(common_assert, ErrorWithMessage)
+TEST(test, ErrorWithMessage)
 {
     int count = 10;
     int max = 5;
