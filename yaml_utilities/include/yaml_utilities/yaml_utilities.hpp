@@ -5,7 +5,7 @@
 #include <yaml-cpp/yaml.h>
 #include <boost/filesystem.hpp>
 
-namespace yaml_eigen_utilities
+namespace yaml_utilities
 {
 
 void yaml_read_file(const boost::filesystem::path &filePath, YAML::Node &doc);
@@ -119,12 +119,12 @@ Emitter &operator<<(Emitter &out, const boost::filesystem::path &path);
 void operator>>(const Node &in, boost::filesystem::path &path);
 Emitter &operator<<(Emitter &out, const boost::filesystem::path &path);
 
-Emitter &operator<<(Emitter &out, const yaml_eigen_utilities::YamlDumpable &obj);
-void operator>>(const Node &in, yaml_eigen_utilities::YamlLoadable &obj);
+Emitter &operator<<(Emitter &out, const yaml_utilities::YamlDumpable &obj);
+void operator>>(const Node &in, yaml_utilities::YamlLoadable &obj);
 
 } // namespace YAML
 
 std::ostream &operator<<(std::ostream &os, const YAML::Emitter &out);
-std::ostream &operator<<(std::ostream &os, const yaml_eigen_utilities::YamlDumpable &obj);
+std::ostream &operator<<(std::ostream &os, const yaml_utilities::YamlDumpable &obj);
 
 #endif

@@ -1,16 +1,19 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(yaml_eigen_utilities)
+project(yaml_utilities)
 
 # @todo Make common_cmake, common_assert build_depends only?
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED common_cmake common_assert stl_utilities)
+find_package(catkin REQUIRED COMPONENTS
+  common_cmake
+  common_assert
+  stl_utilities
+)
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system filesystem)
-find_package(eigen3 REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
 ###################################
@@ -24,7 +27,7 @@ find_package(yaml-cpp REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES yaml_eigen_utilities
+  LIBRARIES yaml_utilities
   CATKIN_DEPENDS common_cmake common_assert stl_utilities
 )
 
@@ -38,17 +41,16 @@ include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
-  ${EIGEN3_INCLUDE_DIR}
   ${YAMLCPP_INCLUDE_DIR}
 )
 
 ## Declare a cpp library
-add_library(yaml_eigen_utilities
+add_library(yaml_utilities
   src/yaml_utilities.cpp
 )
 
 # Specify libraries to link a library or executable target against
-target_link_libraries(yaml_eigen_utilities
+target_link_libraries(yaml_utilities
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
   ${YAMLCPP_LIBRARY}
@@ -69,7 +71,7 @@ target_link_libraries(yaml_eigen_utilities
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS yaml_eigen_utilities yaml_eigen_utilities_node
+# install(TARGETS yaml_utilities yaml_utilities_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

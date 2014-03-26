@@ -1,12 +1,12 @@
 #include <fstream>
 #include <sstream>
 
-#include <yaml_eigen_utilities/yaml_utilities.hpp>
+#include <yaml_utilities/yaml_utilities.hpp>
 
 using namespace YAML;
 using namespace std;
 
-namespace yaml_eigen_utilities
+namespace yaml_utilities
 {
 
 void yaml_read_stream(std::istream &stream, YAML::Node &doc)
@@ -85,12 +85,12 @@ Emitter &operator<<(Emitter &out, const boost::filesystem::path &path)
     return out << path.string();
 }
 
-void operator>>(const Node &in, yaml_eigen_utilities::YamlLoadable &obj)
+void operator>>(const Node &in, yaml_utilities::YamlLoadable &obj)
 {
     obj.load(in);
 }
 
-Emitter &operator<<(Emitter &out, const yaml_eigen_utilities::YamlDumpable &obj)
+Emitter &operator<<(Emitter &out, const yaml_utilities::YamlDumpable &obj)
 {
     obj.dump(out);
     return out;
@@ -104,7 +104,7 @@ std::ostream &operator<<(std::ostream &os, const YAML::Emitter &out)
     return os << out.c_str();
 }
 
-std::ostream &operator<<(std::ostream &os, const yaml_eigen_utilities::YamlDumpable &obj)
+std::ostream &operator<<(std::ostream &os, const yaml_utilities::YamlDumpable &obj)
 {
     Emitter out;
     out << obj;
