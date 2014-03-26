@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <common_assert.hpp>
+#include <common_assert/common_assert.hpp>
 
 TEST(test, NoError)
 {

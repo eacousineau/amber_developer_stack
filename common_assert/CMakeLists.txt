@@ -9,9 +9,5 @@ catkin_package(
 
 include_directories(include)
 
-#############
-## Testing ##
-#############
-
 ## Add gtest based cpp test target and link libraries
-catkin_add_gtest(${PROJECT_NAME}-test test/common_assert-test.cpp)
+catkin_add_gtest(${PROJECT_NAME}-test test/test_common_assert.cpp)
