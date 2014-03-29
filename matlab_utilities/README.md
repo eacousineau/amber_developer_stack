@@ -12,7 +12,7 @@ If you wish your Matlab simulation to be robust, I would strongly suggest using 
 
 To use the dependencies in here, simply make sure that the `matlab` direcotry is in your Matlab `path()`, figure out which dependencies you want (i.e., `general`, `sim`, `yaml`, etc.), and execute something like:
 
-	matlab_utilties_depends('general', 'sim', 'yaml', 'ros');
+	matlab_utilities_depends('general', 'sim', 'yaml', 'ros');
 
 ## Using as ROS Package
 
