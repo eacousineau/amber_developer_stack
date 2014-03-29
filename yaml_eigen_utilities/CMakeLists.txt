@@ -81,7 +81,7 @@ find_package(eigen3 REQUIRED)
 catkin_package(
  INCLUDE_DIRS include
 #  LIBRARIES yaml_eigen_utilities
-#  CATKIN_DEPENDS yaml_utilities
+  CATKIN_DEPENDS yaml_utilities
 #  DEPENDS eigen3
 )
 
