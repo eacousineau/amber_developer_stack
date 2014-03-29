@@ -14,7 +14,7 @@ expected.values = [1; 2; 3]; % Shape gets lost
 str = yaml_dump(expected);
 
 % Ensure that elements are converted to a matrix
-actual = yaml_load(str, true);
+actual = cell_to_matrix_scan(yaml_load(str));
 assert(strcmp(expected.name, actual.name));
 assert(all(expected.values == actual.values));
 
