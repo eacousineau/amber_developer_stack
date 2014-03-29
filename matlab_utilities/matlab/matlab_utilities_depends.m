@@ -18,6 +18,8 @@ for i = 1:nargin
     switch dep
         case 'yaml'
             yaml_init();
+        case 'spatial_v2'
+            spatial_v2_init();
     end
 end
 
