@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Serve as an aggregate of *general* Matlab scripts to be easily accessible elsewhere. THis is a ROS package, but the files within it are not all meant to explicitly depend on ROS nor environment variables. From my experience [eac], using a maze of environment variables and random package paths will yield useless complexity and complication, wasted time, and despair.
+This package serves as an aggregate of *general* Matlab scripts to be easily accessible elsewhere. This is a ROS package, but the files within it are not all meant to explicitly depend on ROS nor environment variables. From my experience [eac], using a maze of environment variables and random package paths will yield useless complexity and complication, wasted time, and despair.
 
 If you wish your Matlab simulation to be robust, I would strongly suggest using [`git subtree`](https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt). Specifically, use `git subtree split` to export the `matlab` git directory history, and `git subtree merge` to splice it into your project. Alternatively, you could use `git submodule` to add the subtree as a repository.
 
-**If you are not using version control, you are setting yourself and collaborators up for frustration and failure when crap hits the fan**.
+**If you are not properly using version control, you are setting yourself and collaborators up for frustration and failure when the unexpected happens.**
 
 ## Usage
 
