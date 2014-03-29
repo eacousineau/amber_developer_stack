@@ -36,7 +36,7 @@ catkin_package(
 include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  ${Boost_LIBRARIES}
+  ${Boost_INCLUDE_DIRS}
 )
 
 # Declare a cpp library
