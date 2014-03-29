@@ -9,12 +9,21 @@ function  [Xj,S] = jcalc( jtyp, q )
 % a field called 'pars', which in turn is a structure containing one or
 % more parameters.  (For a helical joint, pars contains a parameter called
 % 'pitch'.)  q is the joint's position variable.
+% modification [eac] add in option to negate, similar to what Matt has done
 
 if ischar( jtyp )
   code = jtyp;
 else
   code = jtyp.code;
 end
+
+sign = 1;
+if code(1) == '-'
+    sign = -1;
+    code = code(2:end);
+end
+
+q = sign * q;
 
 switch code
   case 'Rx'				% revolute X axis
@@ -49,4 +58,8 @@ switch code
     S = [0;0;1];
   otherwise
     error( 'unrecognised joint code ''%s''', code );
+end
+
+S = sign * S;
+
 end
