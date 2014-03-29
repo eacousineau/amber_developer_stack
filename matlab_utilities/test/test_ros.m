@@ -1,4 +1,10 @@
-%> @brief Basic unittests
+%> @brief Basic ros unittests
+close('all'); clear('all'); path(pathdef());
+
+[~, pkg] = system('rospack find matlab_utilities');
+pkg = strtrim(pkg);
+addpath(fullfile(pkg, 'matlab'));
+matlab_utilities_depends('ros');
 
 actual = ros_resolve_local_url('package://roscpp');
 expected = rospack_find('roscpp');
