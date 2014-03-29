@@ -1,13 +1,14 @@
-function [model] = yaml_read_spatial_model(file_path, gravity)
+%> @brief Convert body struct to a spatial_v2 model
+%> The purose of this is to facility an ease of conversion between
+%> spatial_v2 and RBDL via files read in by yaml
+function [model] = body_struct_to_spatial_model(body_struct, gravity)
 
 if nargin < 2
     gravity = -9.81;
 end
 
-data = cell_to_matrix_scan(yaml_read_file(file_path));
-
-% dim = data.dim; % @todo Add in option for planar
-bodies = data.bodies;
+% dim = body_struct.dim; % @todo Add in option for planar
+bodies = body_struct.bodies;
 NB = length(bodies);
 blankc = cell(NB, 1);
 blankm = zeros(NB, 1);
