@@ -6,6 +6,7 @@ project(yaml_eigen_utilities)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   yaml_utilities
+  common_assert
 )
 
 ## System dependencies are found with CMake's conventions
@@ -81,7 +82,7 @@ find_package(eigen3 REQUIRED)
 catkin_package(
  INCLUDE_DIRS include
 #  LIBRARIES yaml_eigen_utilities
-  CATKIN_DEPENDS yaml_utilities
+  CATKIN_DEPENDS yaml_utilities common_assert
 #  DEPENDS eigen3
 )
 

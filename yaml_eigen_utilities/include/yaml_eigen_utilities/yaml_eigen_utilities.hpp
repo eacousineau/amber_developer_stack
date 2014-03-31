@@ -2,6 +2,7 @@
 #define _COMMON_YAML_EIGEN_UTILITIES_HPP_
 
 #include <Eigen/Dense>
+#include <common_assert/common_assert.hpp>
 #include <yaml_utilities/yaml_utilities.hpp>
 
 // Have to put these here to overload yaml-cpp's implementation for vector in stlnode
