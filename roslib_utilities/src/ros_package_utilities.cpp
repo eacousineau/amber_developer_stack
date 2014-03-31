@@ -5,17 +5,18 @@
 namespace roslib_utilities
 {
 
-boost::filesystem::path resolve_local_url(const std::string &url)
+boost::filesystem::path resolve_local_url(const boost::filesystem::path &url)
 {
     /// @note Shamelessly filched from resource_retriever/src/retriever.cpp
-    std::string mod_url = url;
-    if (url.find("package://") == 0)
+    const std::string &s_url = url.string();
+    std::string mod_url = s_url;
+    if (s_url.find("package://") == 0)
     {
         mod_url.erase(0, strlen("package://"));
         size_t pos = mod_url.find("/");
         if (pos == std::string::npos)
         {
-            throw std::runtime_error(url + ": Could not parse package:// format into file:// format");
+            throw std::runtime_error(s_url + ": Could not parse package:// format into file:// format");
         }
         
         std::string package = mod_url.substr(0, pos);
@@ -24,12 +25,12 @@ boost::filesystem::path resolve_local_url(const std::string &url)
         
         if (package_path.empty())
         {
-            throw std::runtime_error(url + ": Package [" + package + "] does not exist");
+            throw std::runtime_error(s_url + ": Package [" + package + "] does not exist");
         }
         
         return package_path + mod_url;
     }
-    else if (url.find("file://") == 0)
+    else if (s_url.find("file://") == 0)
     {
         mod_url.erase(0, strlen("file://"));
         return mod_url;

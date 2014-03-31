@@ -12,12 +12,7 @@ namespace roslib_utilities
  * @return The final file path, which may be relative if a basic file path was used.
  * @note You could pass this output to boost::filesystem::absolute(rel, base=pwd())
  */
-boost::filesystem::path resolve_local_url(const std::string &url);
-
-inline boost::filesystem::path resolve_local_url(const boost::filesystem::path &url)
-{
-    return resolve_local_url(url.string());
-}
+boost::filesystem::path resolve_local_url(const boost::filesystem::path &url);
 
 }
 
