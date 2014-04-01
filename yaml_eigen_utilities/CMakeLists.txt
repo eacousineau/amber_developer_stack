@@ -80,9 +80,13 @@ find_package(eigen3 REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
- INCLUDE_DIRS include
+ INCLUDE_DIRS
+   include
+   ${EIGEN3_INCLUDE_DIR}
 #  LIBRARIES yaml_eigen_utilities
-  CATKIN_DEPENDS yaml_utilities common_assert
+  CATKIN_DEPENDS
+    yaml_utilities
+    common_assert
 #  DEPENDS eigen3
 )
 
