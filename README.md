@@ -8,14 +8,13 @@ This is meant for develspace for the time being. To install, the easiest way is 
 
 ## `catkin_rename_package.sh`
 
-The invocation of this scripts is simply:
+See `catkin_rename_package.sh --help` for more invocation details.
 
-	catkin_rename_package ${dir} ${from} ${to}
+Example:
 
-where `${dir}` is your source dirctory containing the package itself (and its dependencies), `${from}` is the original package name, and `${to}` is the new package name.
+	catkin_rename_package.sh . original_name silly_name
 
-1.	Find all files matching a source-type pattern (i.e., C++, Python, CMake, shell) and replaces `${from}` by `${to}`
-2.	Finds all directories matching `${from}` and renames them to `${to}` (in reverse order so that top-level renames happen last)
+To see it in action, run `test/test_catkin_pakage_rename.sh` (no installation necessary).
 
 ## Todo
 
