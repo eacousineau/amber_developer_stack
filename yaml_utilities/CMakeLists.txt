@@ -26,8 +26,8 @@ find_package(yaml-cpp REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES yaml_utilities
+  INCLUDE_DIRS include ${Boost_INCLUDE_DIRS}
+  LIBRARIES yaml_utilities ${Boost_LIBRARIES} ${YAMLCPP_LIBRARY}
   CATKIN_DEPENDS common_cmake common_assert stl_utilities
 )
 
