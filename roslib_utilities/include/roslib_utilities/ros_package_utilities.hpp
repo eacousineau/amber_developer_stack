@@ -1,3 +1,7 @@
+/**
+ * @brief Utility functions for ros/package
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
 #ifndef _COMMON_ROS_PACKAGE_UTILITIES_
     #define _COMMON_ROS_PACKAGE_UTILITIES_
 

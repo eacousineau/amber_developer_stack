@@ -1,3 +1,7 @@
+/**
+ * @brief Unittests for ros/package utilities
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
 #include <gtest/gtest.h>
 
 #include <ros/package.h>

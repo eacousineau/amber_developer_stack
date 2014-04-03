@@ -1,3 +1,7 @@
+/**
+ * @brief Unittests to show usage for and ensure proper function of assertion utility
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
 #include <gtest/gtest.h>
 
 #include <common_assert/common_assert.hpp>

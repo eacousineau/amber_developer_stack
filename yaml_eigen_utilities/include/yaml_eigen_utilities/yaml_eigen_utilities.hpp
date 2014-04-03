@@ -1,5 +1,9 @@
-#ifndef _COMMON_YAML_EIGEN_UTILITIES_HPP_
-#define _COMMON_YAML_EIGEN_UTILITIES_HPP_
+/**
+ * @brief YAML functions for reading Eigen vectors and matrices
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
+#ifndef _YAML_EIGEN_UTILITIES_HPP_
+#define _YAML_EIGEN_UTILITIES_HPP_
 
 #include <Eigen/Dense>
 #include <common_assert/common_assert.hpp>

@@ -1,3 +1,7 @@
+/**
+ * @brief Unittests for STL container utilities
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
 #include <gtest/gtest.h>
 
 #include <stl_utilities/container_utilities.hpp>

@@ -1,5 +1,9 @@
-#ifndef _COMMON_STL_UTILITIES
-	#define _COMMON_STL_UTILITIES
+/**
+ * @brief Simple wrapper for Qt-style operators for std::vector<>
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
+#ifndef _STL_UTILITIES
+	#define _STL_UTILITIES
 
 #include <vector>
 
@@ -24,4 +28,4 @@ inline vector<T>& operator<<(vector<T> &v, const vector<Item> &other)
 
 } // namespace std
 
-#endif // _COMMON_STL_UTILITIES
+#endif // _STL_UTILITIES

@@ -1,3 +1,7 @@
+/**
+ * @brief Unittests for basic YAML stream helper functions
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
 #include <gtest/gtest.h>
 
 #include <common_assert/common_assert.hpp>

@@ -1,3 +1,7 @@
+/**
+ * @brief Command line interface for HZD ROS node
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
 #ifndef _COMMON_YAML_UTILITIES_HPP_
 #define _COMMON_YAML_UTILITIES_HPP_
 

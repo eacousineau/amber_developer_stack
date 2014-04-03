@@ -1,3 +1,6 @@
+/**
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
 #include <ros/package.h>
 
 #include "roslib_utilities/ros_package_utilities.hpp"

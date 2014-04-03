@@ -1,3 +1,7 @@
+/**
+ * @brief Utility functions for assertions by throwing informative exceptions
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
 #ifndef _COMMON_ASSERT_
 #define _COMMON_ASSERT_
 

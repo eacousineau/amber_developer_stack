@@ -1,3 +1,6 @@
+/**
+ * @author Eric Cousineau <eacousineau@gmail.com>
+ */
 #include <fstream>
 #include <sstream>
 
