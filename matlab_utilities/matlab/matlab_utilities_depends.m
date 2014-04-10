@@ -14,12 +14,11 @@ for i = 1:nargin
     assert(isdir(dep_path), 'Invalid dependency (directory does not exist): %s', dep_path);
     addpath(dep_path);
     
-    % Handle specifics
-    switch dep
-        case 'yaml'
-            yaml_init();
-        case 'spatial_v2'
-            spatial_v2_init();
+    % Check for specific initialization
+    init_path = fullfile(dep_path, [dep, '_init.m']);
+    if exist(init_path, 'file')
+        % Invoke initialization function
+        feval([dep, '_init']);
     end
 end
 
