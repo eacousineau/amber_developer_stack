@@ -12,60 +12,98 @@ using namespace std;
  * Looking at: https://github.com/dgorissen/pymatopt.git
  */
 
+/**
+ * @brief TestInterface A test to show some of the capabilities of matlab_interface::Interface
+ */
 class TestInterface : public Interface
 {
+    /** @brief A counter to show persistence */
     int counter;
 public:
     TestInterface()
         : Interface("matlab_interface_test", "Test interface"),
         counter(0)
-    {
-        commands.add(new Command("meh", "Meh, do something", "[obj] = f(A, b)",
-                boost::bind(&TestInterface::meh, this, _1)));
-        commands.add(new Command("hai", "Say hello", "",
-                boost::bind(&TestInterface::hai, this, _1)));
-        commands.add(new Command("incr", "Increment (show persistence)", "",
-                boost::bind(&TestInterface::incr, this, _1)));
+    {        
+        commands.add(new Command("variable_arguments", "Print number of inputs and outputs, and "
+                "assign i = 1..nargout to varargout", "[varargout] = f(varargin)",
+                boost::bind(&TestInterface::variableArguments, this, _1)));
+        
+        commands.add(new Command("reset_counter", "Reset counter", "[count] = f()",
+                boost::bind(&TestInterface::resetCounter, this, _1)));
+        commands.add(new Command("increment_counter", "Increment to show persistence", "",
+                boost::bind(&TestInterface::incrementCounter, this, _1)));
+        
+        commands.add(new Command("generate_struct",
+                "Generate a structure, printing results in C++, with name as string, A as matrix, b as scalar:\n"
+                "\tobj = struct('name', name, ...\n"
+                "\t\t'cell', {A, b, 'Hello'});\n"
+                "\tvalue = -b * A';",
+                "[obj, value] = f(name, A, b)",
+                boost::bind(&TestInterface::generateStruct, this, _1)));
     }
 
     void load()
     {
     }
 
-    void meh(Args args)
+    void generateStruct(Args args)
     {
-        common_assert_msg(args.nin == 2 && args.nout == 1, "Need two inputs and one output");
+        common_assert_msg(args.nin == 3 && args.nout == 2,
+            "Need 3 inputs (given " << args.nin << ") and 2 outputs (given " << args.nout << ")");
 
-        MatrixXd A, C;
+        // Get inputs
+        string name;
+        MatrixXd A;
         double b;
-        args >> A >> b;
+        args >> name >> A >> b;
 
-        C = -b * A.transpose();
-        cout << "A: " << A << "\nb: " << b << "\nC: " << C << "\n";
+        MatrixXd value = -b * A.transpose();
+        cout << "A: " << A
+            << "\nb: " << b
+            << "\nvalue: " << value << "\n";
 
         Struct obj;
-        Cell blar;
-        blar << A << b << C << "Hello";
+        Cell cell;
+        /// @todo Throw error if b is not a scalar!
+        cell << A << b << "Hello";
         obj.set("name", "Test");
-        obj.set("C", C);
-        obj.set("blar", to_mex(blar));
+        obj.set("cell", to_mex(cell));
 
         // TODO Make struct stuff more elegant with const' stuff later
         args.push(to_mex(obj));
+        args << value;
     }
 
-    void hai(Args args)
+    void variableArguments(Args args)
     {
-        cout << "You gave me " << args.nin << " input and " << args.nout << " output arguments.\n";
+        cout << "Given " << args.nin << " input and " << args.nout << " output arguments.\n";
+        
+        // Assign arguments so that Matlab does not complain
+        int count = args.nout; // This number changes as arguments are pushed
+        for (int i = 0; i < count; ++i)
+            args << (i + 1);
+    }
+    
+    void resetCounter(Args args)
+    {
+        common_assert(args.nin ==0 && args.nout == 0);
+        counter = 0;
+        cout << "Counter reset to 0\n";
     }
 
-    void incr(Args args)
+    void incrementCounter(Args args)
     {
+        common_assert_msg(args.nin == 0, "No input arguments allowed");
+        common_assert_msg(args.nout == 0 || args.nout == 1, "Need 0 or 1 arguments, given " << args.nout);
+        
         counter++;
         cout << "Counter: " << counter << "\n";
+        
+        if (args.nout == 1)
+            args << counter;
     }
 };
 
 TestInterface testInterface;
 
-MATLAB_INTERFACE_MAIN(testInterface);
+MATLAB_INTERFACE_MAIN(testInterface)
