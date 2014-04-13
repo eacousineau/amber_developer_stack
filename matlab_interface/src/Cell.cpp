@@ -5,9 +5,7 @@
  *      Author: eacousineau
  */
 
-#include <matlab_interface/util/Cell.hpp>
-
-using namespace amber::easy;
+#include <matlab_interface/Cell.hpp>
 
 namespace matlab_interface
 {
@@ -17,7 +15,7 @@ Cell::Cell()
 
 int Cell::add(mxArray *value)
 {
-    values << value;
+    values.push_back(value);
     return values.size() - 1;
 }
 

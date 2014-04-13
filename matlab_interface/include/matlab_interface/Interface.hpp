@@ -8,6 +8,7 @@
 #ifndef MATLABINTERFACEBASE_H_
 #define MATLABINTERFACEBASE_H_
 
+#include <boost/shared_ptr.hpp>
 #include <matlab_interface/util.hpp>
 
 #define MATLAB_INTERFACE_MAIN(interface) \

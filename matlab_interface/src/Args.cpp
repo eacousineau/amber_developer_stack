@@ -1,6 +1,4 @@
-#include <matlab_interface/util.hpp>
-
-using namespace amber::easy;
+#include <matlab_interface/Args.hpp>
 
 namespace matlab_interace
 {

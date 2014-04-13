@@ -1,7 +1,11 @@
 #ifndef MATLAB_COMMAND_H
 #define MATLAB_COMMAND_H
 
-#include <matlab_interface/util.hpp>
+#include <vector>
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
+
+#include <matlab_interface/Args.hpp>
 
 // http://cc.byexamples.com/2008/06/16/gnu-readline-implement-custom-auto-complete/
 // http://cc.byexamples.com/2008/06/13/gnu-readline-how-to-keep-a-history-list-of-entered-command-lines/

@@ -5,7 +5,7 @@
  *      Author: eacousineau
  */
 
-#include <matlab_interface/util/Struct.hpp>
+#include <matlab_interface/Struct.hpp>
 
 namespace matlab_interface
 {

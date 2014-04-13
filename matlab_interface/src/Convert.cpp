@@ -1,6 +1,6 @@
-#include "matlab_interface/util/Convert.hpp"
+#include "matlab_interface/Convert.hpp"
 
-using namespace amber::easy;
+using namespace Eigen;
 
 namespace matlab_interface
 {

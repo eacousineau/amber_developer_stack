@@ -8,7 +8,8 @@
 #ifndef MATLAB_INTERFACE_STRUCT_H_
 #define MATLAB_INTERFACE_STRUCT_H_
 
-#include <matlab_interface/util/Convert.hpp>
+#include <map>
+#include <matlab_interface/Convert.hpp>
 
 namespace matlab_interface
 {

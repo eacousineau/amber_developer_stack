@@ -1,7 +1,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "matlab_interface/util/Command.hpp"
+#include "matlab_interface/Command.hpp"
 
 using namespace std;
 

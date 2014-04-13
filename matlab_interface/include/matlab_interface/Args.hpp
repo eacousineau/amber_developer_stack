@@ -1,11 +1,7 @@
 #ifndef MATLAB_INTERFACE_ARGS_H
 #define MATLAB_INTERFACE_ARGS_H
 
-#include <mex.h>
-#include <matrix.h>
-
-#include <amber/util.hpp>
-#include <matlab_interface/util/Convert.hpp>
+#include <matlab_interface/Convert.hpp>
 
 // http://www.mathworks.com/help/matlab/apiref/
 // http://www.mathworks.com/help/matlab/using-mxarrays-for-writing-c-c-and-fortran-programs-for-use-with-matlab.html

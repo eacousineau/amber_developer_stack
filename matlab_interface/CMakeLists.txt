@@ -109,11 +109,11 @@ include_directories(
 set(SRCS)
 foreach(name
     Interface
-    util/Args
-    util/Struct
-    util/Cell
-    util/Command
-    util/Convert)
+    Args
+    Struct
+    Cell
+    Command
+    Convert)
   list(APPEND SRCS src/${name}.cpp)
 endforeach()
 

@@ -5,9 +5,11 @@
  *      Author: eacousineau
  */
 
+#include <iostream>
+
 #include "matlab_interface/Interface.hpp"
 
-using namespace Eigen;
+using namespace std;
 
 namespace matlab_interface
 {
