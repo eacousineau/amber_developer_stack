@@ -42,7 +42,7 @@ set(MEX_CXX "g++-${MEX_GCC_VERSION}")
 # Can see the difference using `objdump -tC ${lib}` and `objdump -TC ${lib}` (-t is normal symbols, -T is for dynamic)
 set(MEX_LINUX_LFLAGS "-Wl,--version-script,${MATLAB_DIR}/extern/lib/${MATLAB_ARCH}/mexFunction.map")
 # -ansi flag conflicts with -std=c++0x. Whoops.
-set(MEX_LINUX_CFLAGS "-DAMBER_EIGEN_ALIGN -DMATLAB_MEX_FILE -D_GNU_SOURCE -fPIC -fno-omit-frame-pointer -pthread -DMX_COMPAT_32") # -ansi -Wl,--no-undefined")
+set(MEX_LINUX_CFLAGS "-DMATLAB_MEX_FILE -D_GNU_SOURCE -fPIC -fno-omit-frame-pointer -pthread -DMX_COMPAT_32") # -ansi -Wl,--no-undefined")
 
 # Propogating
 set(IS_MEX 1)
@@ -81,28 +81,19 @@ endmacro(target_link_mex_engine)
 
 # Adjusted from Kaszubski's
 macro(add_mex lib)
-	if(ROSBUILD_init_called)
-		rosbuild_add_library(${lib} SHARED ${ARGN})
-	else(ROSBUILD_init_called)
-		add_library(${lib} SHARED ${ARGN})
-	endif(ROSBUILD_init_called)
+	add_library(${lib} SHARED ${ARGN})
 	target_link_mex(${lib})
+
+	set(dir ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION})
+	set(file ${lib}.mex${MEX_EXT})
+    set(path ${dir}/${file})
+	message("Mex Path: ${path}")
+
 	get_property(target_file TARGET ${lib} PROPERTY LOCATION)
 
-	# Wait... How will this work with catkin? How to get path?
-
-	set(MEX_DIR ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION})
-	set(${lib}_MEX ${lib}.mex${MEX_EXT})
-	message("Mex file: ${MEX_DIR}/${${lib}_MEX}")
-#	set(${lib}_MEX_PATH ${CMAKE_BINARY_DIR}/${${lib}_MEX})
-	#set_target_properties(${lib} PROPERTIES LINK_FLAGS "${MEX_LINUX_LFLAGS}")
 	add_custom_command(TARGET ${lib} POST_BUILD COMMAND
-		${CMAKE_COMMAND} -E copy ${target_file} ${${lib}_MEX})
-	if(MEX_DIR)
-		add_custom_command(TARGET ${lib} POST_BUILD COMMAND
-			${CMAKE_COMMAND} -E copy ${${lib}_MEX} ${MEX_DIR})
-	endif(MEX_DIR)
+		${CMAKE_COMMAND} -E copy ${target_file} ${file})
 endmacro(add_mex)
 
 # @todo This won't work for 32-bit
-list(APPEND CMAKE_LIBRARY_PATH /usr/lib/x86_64-linux-gnu)
+#list(APPEND CMAKE_LIBRARY_PATH /usr/lib/x86_64-linux-gnu)

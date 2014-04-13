@@ -1,4 +1,4 @@
-#include <boost/bind.hpp>
+#include <common_assert/common_assert.hpp>
 
 #include "matlab_interface/Interface.hpp"
 
@@ -17,7 +17,8 @@ class TestInterface : public Interface
     int counter;
 public:
     TestInterface()
-        : counter(0)
+        : Interface("matlab_interface_test", "Test interface"),
+        counter(0)
     {
         commands.add(new Command("meh", "Meh, do something", "[obj] = f(A, b)",
                 boost::bind(&TestInterface::meh, this, _1)));

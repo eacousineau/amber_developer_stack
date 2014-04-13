@@ -172,6 +172,9 @@ add_library(matlab_interface
 ## Testing ##
 #############
 
+add_mex(${PROJECT_NAME}_test test/test.cpp)
+target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME})
+
 ## Add gtest based cpp test target and link libraries
 # catkin_add_gtest(${PROJECT_NAME}-test test/test_matlab_interface.cpp)
 # if(TARGET ${PROJECT_NAME}-test)

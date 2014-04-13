@@ -32,7 +32,7 @@ private:
 protected:
     CommandList commands;
 public:
-    Interface();
+    Interface(const std::string &name, const std::string &description);
     virtual ~Interface();
 
     /**

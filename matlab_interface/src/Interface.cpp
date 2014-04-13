@@ -16,14 +16,14 @@ namespace matlab_interface
 
 boost::shared_ptr<Interface> Interface::instance;
 
-Interface::Interface()
+Interface::Interface(const string &name, const string &description)
     : isLoaded(false),
-      commands("amber_sim", "Amber Model Sim C++ Module Thing")
+      commands(name, description)
 {
     // What about error?
     stdoutBuf = std::cout.rdbuf(&matlabBuf);
     //mexAtExit(&matlab_unload); // May not be needed because of deconstructor
-    cout << "Loaded amber_matlab C++ module\n";
+    cout << "Loaded matlab_interface C++ module\n";
 
     commands.add(new Command("init", "Load up stuff", "",
             boost::bind(&Interface::init, this, _1)));
@@ -31,7 +31,7 @@ Interface::Interface()
 
 Interface::~Interface()
 {
-    cout << "Unloaded amber_matlab C++ module\n";
+    cout << "Unloaded matlab_interface C++ module\n";
 }
 
 void Interface::main(Args args)
