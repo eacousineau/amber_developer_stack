@@ -92,7 +92,7 @@ macro(add_mex lib)
 	get_property(target_file TARGET ${lib} PROPERTY LOCATION)
 
 	add_custom_command(TARGET ${lib} POST_BUILD COMMAND
-		${CMAKE_COMMAND} -E copy ${target_file} ${file})
+		${CMAKE_COMMAND} -E copy ${target_file} ${path})
 endmacro(add_mex)
 
 # @todo This won't work for 32-bit
