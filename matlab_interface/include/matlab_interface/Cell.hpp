@@ -9,7 +9,7 @@
 #define MATLAB_INTERFACE_CELL_H_
 
 #include <vector>
-#include <matlab_interface/Convert.hpp>
+#include <matlab_interface/conversion.hpp>
 
 namespace matlab_interface
 {

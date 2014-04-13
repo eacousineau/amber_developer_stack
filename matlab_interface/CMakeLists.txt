@@ -113,7 +113,7 @@ foreach(name
     Struct
     Cell
     Command
-    Convert)
+    conversion)
   list(APPEND SRCS src/${name}.cpp)
 endforeach()
 

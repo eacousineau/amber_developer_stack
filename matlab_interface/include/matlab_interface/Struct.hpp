@@ -9,7 +9,7 @@
 #define MATLAB_INTERFACE_STRUCT_H_
 
 #include <map>
-#include <matlab_interface/Convert.hpp>
+#include <matlab_interface/conversion.hpp>
 
 namespace matlab_interface
 {

@@ -1,4 +1,4 @@
-#include "matlab_interface/Convert.hpp"
+#include "matlab_interface/conversion.hpp"
 
 using namespace Eigen;
 
