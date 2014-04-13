@@ -33,7 +33,7 @@ public:
 
     void meh(Args args)
     {
-        assert_ex_msg(args.nin == 2 && args.nout == 1, "Need two inputs and one output");
+        common_assert_msg(args.nin == 2 && args.nout == 1, "Need two inputs and one output");
 
         MatrixXd A, C;
         double b;

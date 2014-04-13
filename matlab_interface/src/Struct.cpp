@@ -15,7 +15,7 @@ Struct::Struct()
     data = mxCreateStructMatrix(1, 1, 0, NULL);
 }
 
-int Struct::set(const string &name, mxArray *value)
+int Struct::set(const std::string &name, mxArray *value)
 {
     FieldMap::iterator iter = fieldMap.find(name);
     int index;

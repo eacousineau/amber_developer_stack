@@ -1,6 +1,8 @@
+#include <common_assert/common_assert.hpp>
+
 #include <matlab_interface/Args.hpp>
 
-namespace matlab_interace
+namespace matlab_interface
 {
 
 Args::Args()
@@ -14,7 +16,7 @@ Args::Args(int nargout, mxArray *argout[], int nargin, const mxArray *argin[])
 // Shift input arguments
 const mxArray *Args::shift()
 {
-    assert_ex_msg(nin >= 1, "Not enough arguments");
+    common_assert_msg(nin >= 1, "Not enough arguments");
     --nin;
     const mxArray *arg = in[0];
     ++in;
@@ -23,7 +25,7 @@ const mxArray *Args::shift()
 
 void Args::push(mxArray *aout)
 {
-    assert_ex_msg(nout >= 1, "Not enough output arguments");
+    common_assert_msg(nout >= 1, "Not enough output arguments");
     --nout;
     *out = aout;
     ++out;
@@ -31,7 +33,7 @@ void Args::push(mxArray *aout)
 
 Args Args::shiftCopy()
 {
-    assert_ex_msg(nin >= 1, "Not enough arguments");
+    common_assert_msg(nin >= 1, "Not enough arguments");
     return Args(nout, out, nin - 1, in - 1);
 }
 

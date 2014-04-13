@@ -69,19 +69,19 @@ mxArray *mxEigenToArray(const VectorXd &b)
     return m;
 }
 
-void mxArrayToString(const mxArray *in, string &out)
+void mxArrayToString(const mxArray *in, std::string &out)
 {
     char *raw = mxArrayToString(in);
     out = raw;
     mxFree(raw);
 }
 
-mxArray *mxStringToArray(const string &in)
+mxArray *mxStringToArray(const std::string &in)
 {
     return mxCreateString(in.c_str());
 }
 
-mxArray *to_mex(const string &str)
+mxArray *to_mex(const std::string &str)
 {
     return mxStringToArray(str);
 }
