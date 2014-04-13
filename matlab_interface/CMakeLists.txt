@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(matlab_interface)
 
-# Enforce Mex
-include(${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}-setup.cmake)
-
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -70,6 +67,10 @@ find_package(eigen3 REQUIRED)
 #   DEPENDENCIES
 #   std_msgs  # Or other packages containing msgs
 # )
+
+# Enforce Mex
+include(${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}-setup.cmake)
+mex_init()
 
 ###################################
 ## catkin specific configuration ##
