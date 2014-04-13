@@ -5,13 +5,11 @@
  *      Author: eacousineau
  */
 
-#include <amber/matlab/util/Cell.hpp>
+#include <matlab_interface/util/Cell.hpp>
 
 using namespace amber::easy;
 
-namespace amber
-{
-namespace matlab
+namespace matlab_interface
 {
 
 Cell::Cell()
@@ -32,5 +30,4 @@ mxArray *Cell::as_mex()
     return data;
 }
 
-}
 }

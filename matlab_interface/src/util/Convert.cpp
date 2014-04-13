@@ -1,10 +1,8 @@
-#include "amber/matlab/util/Convert.hpp"
+#include "matlab_interface/util/Convert.hpp"
 
 using namespace amber::easy;
 
-namespace amber
-{
-namespace matlab
+namespace matlab_interface
 {
 
 std::streamsize StdOutBuffer::xsputn(const char *s, std::streamsize n)
@@ -124,5 +122,4 @@ void from_mex(const mxArray *m, int &value)
     value = mxGetScalar(m);
 }
 
-}
 }

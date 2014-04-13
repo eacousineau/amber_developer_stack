@@ -8,17 +8,15 @@
 #ifndef MATLABINTERFACEBASE_H_
 #define MATLABINTERFACEBASE_H_
 
-#include <amber/matlab/util.hpp>
+#include <matlab_interface/util.hpp>
 
-#define AMBER_MATLAB_MAIN(interface) \
+#define MATLAB_INTERFACE_MAIN(interface) \
 	void mexFunction(int nargout, mxArray *argout[], int nargin, const mxArray *argin[]) \
 	{ \
-		(interface).main(amber::matlab::Args(nargout, argout, nargin, argin)); \
+		(interface).main(matlab_interface::Args(nargout, argout, nargin, argin)); \
 	}
 
-namespace amber
-{
-namespace matlab
+namespace matlab_interface
 {
 
 /**
@@ -47,5 +45,5 @@ public:
 };
 
 }
-} /* namespace AmberSim */
+
 #endif /* MATLABINTERFACEBASE_H_ */

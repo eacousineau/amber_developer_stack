@@ -1,13 +1,11 @@
 #include <vector>
 #include <algorithm>
 
-#include "amber/matlab/util/Command.hpp"
+#include "matlab_interface/util/Command.hpp"
 
-using namespace amber::easy;
+using namespace std;
 
-namespace amber
-{
-namespace matlab
+namespace matlab_interface
 {
 
 using std::ostream;
@@ -117,5 +115,4 @@ void Command::toString(ostream &os)
     }
 }
 
-}
 }

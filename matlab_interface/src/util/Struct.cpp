@@ -5,13 +5,9 @@
  *      Author: eacousineau
  */
 
-#include <amber/matlab/util/Struct.hpp>
+#include <matlab_interface/util/Struct.hpp>
 
-using namespace amber::easy;
-
-namespace amber
-{
-namespace matlab
+namespace matlab_interface
 {
 
 Struct::Struct()
@@ -34,5 +30,4 @@ int Struct::set(const string &name, mxArray *value)
     return index;
 }
 
-}
 }

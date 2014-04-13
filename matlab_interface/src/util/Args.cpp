@@ -1,10 +1,8 @@
-#include <amber/matlab/util.hpp>
+#include <matlab_interface/util.hpp>
 
 using namespace amber::easy;
 
-namespace amber
-{
-namespace matlab
+namespace matlab_interace
 {
 
 Args::Args()
@@ -39,5 +37,4 @@ Args Args::shiftCopy()
     return Args(nout, out, nin - 1, in - 1);
 }
 
-}
 }

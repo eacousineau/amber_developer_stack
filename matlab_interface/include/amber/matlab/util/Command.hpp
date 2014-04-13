@@ -1,7 +1,7 @@
 #ifndef MATLAB_COMMAND_H
 #define MATLAB_COMMAND_H
 
-#include <amber/matlab/util.hpp>
+#include <matlab_interface/util.hpp>
 
 // http://cc.byexamples.com/2008/06/16/gnu-readline-implement-custom-auto-complete/
 // http://cc.byexamples.com/2008/06/13/gnu-readline-how-to-keep-a-history-list-of-entered-command-lines/
@@ -10,12 +10,10 @@
 
 // For dispatch, make an abstract Arg class, can be istream, or MatlabArgs
 
-#define AMBER_MATLAB_BIND(type, method) \
+#define MATLAB_INTERFACE_BIND(type, method) \
 	boost::bind(&type::method, this, _1)
 
-namespace amber
-{
-namespace matlab
+namespace matlab_interface
 {
 
 typedef boost::function<void(Args)> DispatchFunc;
@@ -59,8 +57,6 @@ public:
     void toString(std::ostream &os);
 };
 
-
-}
 }
 
 #endif // MATLAB_COMMAND_H

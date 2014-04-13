@@ -1,10 +1,10 @@
-//#ifndef AMBER_MATLAB_UTIL
-//	#define AMBER_MATLAB_UTIL
+//#ifndef MATLAB_INTERFACE_UTIL
+//	#define MATLAB_INTERFACE_UTIL
 
-#include <amber/matlab/util/Command.hpp>
-#include <amber/matlab/util/Convert.hpp>
-#include <amber/matlab/util/Args.hpp>
-#include <amber/matlab/util/Struct.hpp>
-#include <amber/matlab/util/Cell.hpp>
+#include <matlab_interface/util/Command.hpp>
+#include <matlab_interface/util/Convert.hpp>
+#include <matlab_interface/util/Args.hpp>
+#include <matlab_interface/util/Struct.hpp>
+#include <matlab_interface/util/Cell.hpp>
 
 //#endif

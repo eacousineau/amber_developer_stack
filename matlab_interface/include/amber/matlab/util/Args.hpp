@@ -1,19 +1,17 @@
-#ifndef AMBER_MATLAB_UTIL_H
-#define AMBER_MATLAB_UTIL_H
+#ifndef MATLAB_INTERFACE_ARGS_H
+#define MATLAB_INTERFACE_ARGS_H
 
 #include <mex.h>
 #include <matrix.h>
 
 #include <amber/util.hpp>
-#include <amber/matlab/util/Convert.hpp>
+#include <matlab_interface/util/Convert.hpp>
 
 // http://www.mathworks.com/help/matlab/apiref/
 // http://www.mathworks.com/help/matlab/using-mxarrays-for-writing-c-c-and-fortran-programs-for-use-with-matlab.html
 // http://www.mathworks.com/help/matlab/matlab_external/examples-of-c-c-source-mex-files.html#bq9posx-1
 
-namespace amber
-{
-namespace matlab
+namespace matlab_interface
 {
 
 // Todo: Split into In and Out
@@ -48,6 +46,5 @@ Args &operator>>(Args &args, T &value)
 }
 
 }
-}
 
-#endif // MEX_UTIL_H
+#endif // MATLAB_INTERFACE_ARGS_H

@@ -5,13 +5,11 @@
  *      Author: eacousineau
  */
 
-#include "amber/matlab/Interface.hpp"
+#include "matlab_interface/Interface.hpp"
 
-using namespace amber::easy;
+using namespace Eigen;
 
-namespace amber
-{
-namespace matlab
+namespace matlab_interface
 {
 
 boost::shared_ptr<Interface> Interface::instance;
@@ -68,5 +66,4 @@ void Interface::init(Args args)
     isLoaded = true;
 }
 
-}
 }

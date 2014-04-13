@@ -1,5 +1,5 @@
-#ifndef AMBER_MATLAB_CONVERT_H
-#define AMBER_MATLAB_CONVERT_H
+#ifndef MATLAB_INTERFACE_CONVERT_H
+#define MATLAB_INTERFACE_CONVERT_H
 
 #include <mex.h>
 #include <matrix.h>
@@ -9,9 +9,7 @@
 // TODO Add in auto to_mex stuff for vector (cell array), maybe maps
 //TODO Make sure these things are type-safe. Look into USC guy's C++ Matlab wrappers.
 
-namespace amber
-{
-namespace matlab
+namespace matlab_interface
 {
 
 // From: http://stackoverflow.com/questions/243696/correctly-over-loading-a-stringbuf-to-replace-cout-in-a-matlab-mex-file
@@ -100,7 +98,6 @@ void from_mex(const mxArray *m, Eigen::Matrix<double, rows, cols>& X)
     return mxArrayToEigen(m, MatrixXd(X));
 }
 
-}
 }
 
 #endif // MEX_UTIL_H

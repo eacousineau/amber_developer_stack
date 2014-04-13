@@ -5,14 +5,12 @@
  *      Author: eacousineau
  */
 
-#ifndef AMBER_MATLAB_CELL_H_
-#define AMBER_MATLAB_CELL_H_
+#ifndef MATLAB_INTERFACE_CELL_H_
+#define MATLAB_INTERFACE_CELL_H_
 
-#include <amber/matlab/util/Convert.hpp>
+#include <matlab_interface/util/Convert.hpp>
 
-namespace amber
-{
-namespace matlab
+namespace matlab_interface
 {
 
 // For now can only write
@@ -47,7 +45,5 @@ inline Cell &operator<<(Cell &cell, const T &value)
 }
 
 }
-}
-
 
 #endif /* STRUCT_H_ */

@@ -1,17 +1,16 @@
 #include <boost/bind.hpp>
 
-#include "amber/matlab/Interface.hpp"
+#include "matlab_interface/Interface.hpp"
 
-using namespace amber::easy;
+using namespace matlab_interface;
+using namespace Eigen;
+using namespace std;
 
-// I want to pass an entry point in matlab for it to call...
-// http://dirkgorissen.com/2012/02/06/bridging-python-and-matlab-passing-callbacks-and-optimization/
-// Looking at: https://github.com/dgorissen/pymatopt.git
-
-namespace amber
-{
-namespace matlab
-{
+/**
+ * @todo I want to pass an entry point in matlab for it to call...
+ * http://dirkgorissen.com/2012/02/06/bridging-python-and-matlab-passing-callbacks-and-optimization/
+ * Looking at: https://github.com/dgorissen/pymatopt.git
+ */
 
 class TestInterface : public Interface
 {
@@ -68,11 +67,4 @@ public:
 
 TestInterface testInterface;
 
-}
-}
-
-AMBER_MATLAB_MAIN(amber::matlab::testInterface);
-
-// How can this be linked against libamber_matlab.a and not have a multiple definition linker error?
-
-
+MATLAB_INTERFACE_MAIN(testInterface);
