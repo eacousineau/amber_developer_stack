@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package>
+  <name>realtime_utilities</name>
+  <version>0.0.0</version>
+  <description>The realtime_utilities package</description>
+  <maintainer email="eacousineau@todo.todo">eacousineau</maintainer>
+  <license>TODO</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <export>
+    </export>
+</package>
