@@ -19,11 +19,24 @@
 // entries in matrices and arrays after resizing.
 #define EIGEN_INITIALIZE_MATRICES_BY_NAN
 
-// Adds a switch which can be turned on and off by calling set_is_malloc_allowed(bool). 
-// If malloc is not allowed and Eigen tries to allocate memory dynamically anyway, an assertion 
-// failure results.
-// In this case, a common_assert::assert_error will be thrown
-#define EIGEN_RUNTIME_NO_MALLOC
+#ifndef NDEBUG
+    
+    // Adds a switch which can be turned on and off by calling set_is_malloc_allowed(bool). 
+    // If malloc is not allowed and Eigen tries to allocate memory dynamically anyway, an assertion 
+    // failure results.
+    // In this case, a common_assert::assert_error will be thrown
+    #define EIGEN_RUNTIME_NO_MALLOC
+
+    // Forward declare
+    namespace Eigen
+    {
+        namespace internal
+        {
+            inline bool set_is_malloc_allowed(bool new_value);
+        }
+    }
+
+#endif
 
 // Switch eigen_assert to throw an exception
 #ifdef eigen_assert
@@ -31,28 +44,62 @@
 #endif
 #define eigen_assert(x)  common_assert(x)
 
+#include <Eigen/Dense>
+
 namespace eigen_utilities
 {
+
+/**
+ * @brief disable_malloc_counter Reference counting mechanism. DO NOT MODIFY!
+ */
+extern int disable_malloc_counter;
 
 /**
  * @brief disable_malloc Increment a global reference counter. If nonzero, it will disable Eigen malloc() calls
  * @note NOT THREAD SAFE! Uses Eigen::internal::set_is_malloc_allowed()
  * @return Reference counter value
  */
-int disable_malloc();
+inline int disable_malloc()
+{
+#ifndef NDEBUG
+    if (disable_malloc_counter == 0)
+        Eigen::internal::set_is_malloc_allowed(false);
+    return ++disable_malloc_counter;
+#else
+    return 0;
+#endif
+}
 
 /**
  * @brief enable_malloc Decrement a global reference counter. If zero, it will enable Eigen malloc() calls
  * @note NOT THREAD SAFE! Throws a std::runtime_error if the reference counter is decremented below zero
  * @return Reference counter value
  */
-int enable_malloc();
+inline int enable_malloc()
+{
+#ifndef NDEBUG
+    common_assert(disable_malloc_counter > 0);
+    --disable_malloc_counter;
+    if (disable_malloc_counter == 0)
+        Eigen::internal::set_is_malloc_allowed(true);
+    return disable_malloc_counter;
+#else
+    return 0;
+#endif
+}
 
 /**
  * @brief is_malloc_enabled Return if malloc() is enabled for Eigen
  * @return 
  */
-bool is_malloc_enabled();
+inline bool is_malloc_enabled()
+{
+#ifndef NDEBUG
+    return disable_malloc_counter == 0;
+#else
+    return true;
+#endif
+}
 
 /**
  * @brief Disable malloc() within a certain scope using reference countin
