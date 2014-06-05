@@ -29,32 +29,68 @@ TEST(eigen_utilities, check_bad_disable)
 
 TEST(eigen_utilities, check_alloc)
 {
-    Eigen::MatrixXd blank;
+    /// @note When the exception is thrown during a resize, it dies on the deconstructor
+    /// if the variable is scoped outside of the resize() statement. Most likely due to the
+    /// catch() for gtest EXPECT_THROW()
+    
     // Expect no error
     {
-        EXPECT_NO_THROW(blank.resize(2, 2));
+        EXPECT_NO_THROW(
+            Eigen::MatrixXd blank;
+            blank.resize(2, 2)
+        );
     }
     
     // Now expect it to error out
     {
         eigen_utilities::DisableMallocScope scope;
-        EXPECT_THROW(blank.resize(4, 4), common::assert_error);
+        EXPECT_THROW(
+            Eigen::MatrixXd blank;
+            blank.resize(4, 4);
+        , common::assert_error);
+        
+        // Check nesting once more
+        {
+            eigen_utilities::DisableMallocScope scope;
+            EXPECT_THROW(
+                Eigen::VectorXd vec(5);
+            , common::assert_error);
+        }
+    }
+    
+    // Check once again, ensuring that it is still disabled
+    {
+        EXPECT_NO_THROW(
+            Eigen::MatrixXd blank;
+            blank.resize(10, 10)
+        );
     }
     
 }
 
-TEST(eigen_utilities, check_nan)
+TEST(eigen_utilities, check_zero)
 {
     Eigen::MatrixXd blank(3, 3);
     
-    // Ensure that all are initialized to nan
-    EXPECT_TRUE((blank.array() != blank.array()).all());
-    std::cout << blank << std::endl;
+    // Ensure that all are initialized to zero
+    EXPECT_TRUE((blank.array() == 0).all());
     
     blank.resize(5, 5);
-    EXPECT_TRUE((blank.array() != blank.array()).all());
-    std::cout << blank << std::endl;
+    EXPECT_TRUE((blank.array() == 0).all());
 }
+
+//TEST(eigen_utilities, check_nan)
+//{
+//    Eigen::MatrixXd blank(3, 3);
+    
+//    // Ensure that all are initialized to nan
+//    EXPECT_TRUE((blank.array() != blank.array()).all());
+//    std::cout << blank << std::endl;
+    
+//    blank.resize(5, 5);
+//    EXPECT_TRUE((blank.array() != blank.array()).all());
+//    std::cout << blank << std::endl;
+//}
 
 int main(int argc, char **argv)
 {
