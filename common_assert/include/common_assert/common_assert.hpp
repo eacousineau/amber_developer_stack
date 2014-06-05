@@ -8,6 +8,7 @@
 #include <sstream>
 #include <stdexcept>
 
+/// @note Name 'common' insead of 'common_assert' to avoid name clash with macro
 namespace common
 {
 
