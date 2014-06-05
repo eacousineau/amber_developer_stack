@@ -1,4 +1,6 @@
 #include <gtest/gtest.h>
+
+#undef NDEBUG
 #include <eigen_utilities/runtime_config.hpp>
 
 #include <Eigen/Dense>
@@ -13,6 +15,7 @@ TEST(eigen_utilities, check_disabled)
         eigen_utilities::DisableMallocScope scope;
         EXPECT_EQ(2, scope.getCounter());
         EXPECT_FALSE(eigen_utilities::is_malloc_enabled());
+        EXPECT_FALSE(Eigen::internal::is_malloc_allowed());
     }
     counter = eigen_utilities::enable_malloc();
     EXPECT_EQ(0, counter);
@@ -30,9 +33,6 @@ TEST(eigen_utilities, check_alloc)
     // Expect no error
     {
         EXPECT_NO_THROW(blank.resize(2, 2));
-        std::cout << blank << std::endl;
-        // Ensure that all are initialized to nan
-        EXPECT_TRUE((blank.array() != blank.array()).all());
     }
     
     // Now expect it to error out
@@ -40,6 +40,20 @@ TEST(eigen_utilities, check_alloc)
         eigen_utilities::DisableMallocScope scope;
         EXPECT_THROW(blank.resize(4, 4), common::assert_error);
     }
+    
+}
+
+TEST(eigen_utilities, check_nan)
+{
+    Eigen::MatrixXd blank(3, 3);
+    
+    // Ensure that all are initialized to nan
+    EXPECT_TRUE((blank.array() != blank.array()).all());
+    std::cout << blank << std::endl;
+    
+    blank.resize(5, 5);
+    EXPECT_TRUE((blank.array() != blank.array()).all());
+    std::cout << blank << std::endl;
 }
 
 int main(int argc, char **argv)
