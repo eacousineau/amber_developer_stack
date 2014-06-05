@@ -15,9 +15,14 @@
 
 #include <common_assert/common_assert.hpp>
 
-// All entries of newly constructed matrices and arrays are initialized to NaN, as are new 
-// entries in matrices and arrays after resizing.
-#define EIGEN_INITIALIZE_MATRICES_BY_NAN
+/// @note For my version of eigen3, `dpkg -s libeigen3-dev` on Ubuntu 12.04 yields "3.0.5-1",
+/// there are no include or #ifdef guards for EIGEN_INITIALIZE_MATRICES_BY_NAN, only
+/// EIGEN_INITIALIZE_MATRICES_BY_ZERO... When was this introduced?
+
+//// All entries of newly constructed matrices and arrays are initialized to NaN, as are new 
+//// entries in matrices and arrays after resizing.
+//#define EIGEN_INITIALIZE_MATRICES_BY_NAN
+#define EIGEN_INITIALIZE_MATRICES_BY_ZERO
 
 #ifndef NDEBUG
     
