@@ -36,8 +36,10 @@ inline u_int64_t clock_nsec()
 /**
  * @brief Elevate process priority to real-time status
  * @note Adapted from hrt_meka_main.c
+ * @param throw_if_error Throw an error if unable to set realtime priority
+ * @return True if realtime enabled, false if otherwise
  */
-void enable_realtime();
+bool enable_realtime(bool throw_if_error = true);
 
 /**
  * @brief Add a time delta to an existing timespec
