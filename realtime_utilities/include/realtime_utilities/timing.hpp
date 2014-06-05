@@ -85,6 +85,15 @@ public:
         clock_gettime(CLOCK_MONOTONIC, &t_start);
     }
     
+    /** @brief Zero the initial time */
+    inline void start_zero()
+    {
+        assert(mode != 1);
+        mode = 1;
+        t_start.tv_nsec = 0;
+        t_start.tv_sec = 0;
+    }
+    
     /** @brief End the timer */
     inline void stop()
     {
