@@ -55,7 +55,11 @@ add_library(${PROJECT_NAME}
 #############
 
 ## Add gtest based cpp test target and link libraries
-catkin_add_gtest(${PROJECT_NAME}-test test/test_runtime_config.cpp)
+catkin_add_gtest(${PROJECT_NAME}-test
+  test/test_runtime_config.cpp
+  test/test_runtime_config_ndebug.cpp
+  test/test_runtime_config_clean_eigen.cpp
+)
 if(TARGET ${PROJECT_NAME}-test)
   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 endif()
