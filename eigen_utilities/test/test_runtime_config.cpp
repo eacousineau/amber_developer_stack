@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 
-#undef NDEBUG
+#ifdef NDEBUG
+    #undef NDEBUG
+#endif
 #include <eigen_utilities/runtime_config.hpp>
 
 #include <Eigen/Dense>
