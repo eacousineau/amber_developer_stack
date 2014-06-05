@@ -69,9 +69,12 @@ private:
     
     /** @brief Mode the timer is in: {0: Not started, 1: Started, 2: Stopped} */
     int8_t mode;
+    
+    /** @brief Allow elapsed() to be called even if the timer is not stopped */
+    bool allow_continuous;
 public:
-    Timer()
-        : mode(0)
+    Timer(bool allow_continuous = false)
+        : mode(0), allow_continuous(allow_continuous)
     { }
     
     /** @brief Start the timer */
@@ -102,8 +105,17 @@ public:
      */
     inline double elapsed() const
     {
-        assert(mode == 2);
-        return clock_diff(t_start, t_end);
+        if (mode == 1 && allow_continuous)
+        {
+            timespec t_temp;
+            clock_gettime(CLOCK_MONOTONIC, &t_temp);
+            return clock_diff(t_start, t_temp);
+        }
+        else
+        {
+            assert(mode == 2);
+            return clock_diff(t_start, t_end);
+        }
     }
     
     /** @brief Scope Scoping mechanism to automatically start / stop a timer */
