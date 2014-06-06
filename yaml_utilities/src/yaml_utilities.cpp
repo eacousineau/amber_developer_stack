@@ -1,6 +1,10 @@
 /**
  * @author Eric Cousineau <eacousineau@gmail.com>
  */
+
+#ifndef _YAML_UTILITIES_YAML_UTILITIES_H
+    #define _YAML_UTILITIES_YAML_UTILITIES_H
+
 #include <fstream>
 #include <sstream>
 
@@ -113,3 +117,5 @@ std::ostream &operator<<(std::ostream &os, const yaml_utilities::YamlDumpable &o
     out << obj;
     return os << out;
 }
+
+#endif // _YAML_UTILITIES_YAML_UTILITIES_H
