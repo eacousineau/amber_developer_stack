@@ -58,8 +58,7 @@ void yaml_read_binary(const YAML::Node &node, T &data)
 void yaml_read_binary_dual(const YAML::Node &node, T &data)
 {
     // Read the binary base64 portion
-    assert(node.size() == 2);
-    yaml_read_binary(node[1], &data, sizeof(T));
+    yaml_read_binary(node["base64"], data);
 }
 
 void yaml_write_binary(YAML::Emitter &out, const void *data, size_t size);
@@ -74,9 +73,11 @@ void yaml_write_binary(YAML::Emitter &out, const T &data)
 void yaml_write_binary_dual(YAML::Emitter &out, const T &data)
 {
     // Write a tuple of dual-representation
-    out << YAML::BeginSeq << data;
+    out << YAML::BeginMap
+        << YAML::Key << "value" << YAML::Value << data
+        << YAML::Key << "base64" << YAML::Value;
     yaml_write_binary(out, data);
-    out << YAML::EndSeq;
+    out << YAML::EndMap;
 }
 
 
