@@ -97,31 +97,31 @@ public:
 #endif
 
 /**
- * @brief Disable malloc() within a certain scope by storing previous value
+ * @brief Enable or disable malloc() within a certain scope by updating the new value, then restoring previous value
  */
-class DisableMallocScope
+class MallocAllowedScope
 {
     bool old_value;
 public:
     #ifndef EIGEN_UTILITIES_NDEBUG
-        inline DisableMallocScope()
+        inline MallocAllowedScope(bool new_value)
         {
             old_value = Eigen::internal::is_malloc_allowed();
-            Eigen::internal::set_is_malloc_allowed(false);
+            Eigen::internal::set_is_malloc_allowed(new_value);
         }
         
-        inline ~DisableMallocScope()
+        inline ~MallocAllowedScope()
         {
             Eigen::internal::set_is_malloc_allowed(old_value);
         }
     #else
-        inline DisableMallocScope()
+        inline MallocAllowedScope(bool new_value)
         {
             old_value = true;
             // Do nothing otherwise
         }
         
-        inline ~DisableMallocScope()
+        inline ~MallocAllowedScope()
         { }
     #endif
     
