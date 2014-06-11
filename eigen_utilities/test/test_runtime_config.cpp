@@ -7,31 +7,6 @@
 
 #include <Eigen/Dense>
 
-// Forward declare stuff from other source files with different sybmols
-namespace test_runtime_config_ndebug
-{
-    /**
-     * @brief check_alloc Allocate a dynamically-sized matrix in a source file NDEBUG defined (where malloc() switches should have no effect)
-     * @return Return the reference counter when eigen_utilites::enable_malloc() is called (should always be zero)
-     */
-    int resize_matrix_calling_disable();
-}
-
-namespace test_runtime_config_clean_eigen
-{
-    /**
-     * @brief check_alloc Allocate a dynamically-sized matrix in a source file with a clean include of Eigen
-     */
-    void resize_matrix();
-}
-
-int resize_matrix()
-{
-    eigen_utilities::DisableMallocScope scope;
-    Eigen::MatrixXd blank;
-    blank.resize(5, 5);
-}
-
 /// @todo Mix source files with and without NDEBUG and runtime_config
 /// Mix the function calls
 
@@ -97,6 +72,32 @@ TEST(eigen_utilities, check_alloc)
     }
 }
 
+#ifdef CHECK_EXTERN
+// Forward declare stuff from other source files with different sybmols
+namespace test_runtime_config_ndebug
+{
+    /**
+     * @brief check_alloc Allocate a dynamically-sized matrix in a source file NDEBUG defined (where malloc() switches should have no effect)
+     * @return Return the reference counter when eigen_utilites::enable_malloc() is called (should always be zero)
+     */
+    int resize_matrix_calling_disable();
+}
+
+namespace test_runtime_config_clean_eigen
+{
+    /**
+     * @brief check_alloc Allocate a dynamically-sized matrix in a source file with a clean include of Eigen
+     */
+    void resize_matrix();
+}
+
+int resize_matrix()
+{
+    eigen_utilities::DisableMallocScope scope;
+    Eigen::MatrixXd blank;
+    blank.resize(5, 5);
+}
+
 TEST(eigen_utilities, check_alloc_extern)
 {
     // Check alloc when including from source files without the MALLOC definition defined
@@ -121,6 +122,7 @@ TEST(eigen_utilities, check_alloc_extern)
         , common::assert_error);
     }
 }
+#endif
 
 TEST(eigen_utilities, check_zero)
 {

@@ -32,6 +32,8 @@ catkin_package(
    ${PROJECT_NAME}
 )
 
+option(CHECK_EXTERN "Enable checking of compiling source files with different preprocessor flags" OFF)
+
 ###########
 ## Build ##
 ###########
