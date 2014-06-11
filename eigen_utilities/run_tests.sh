@@ -26,6 +26,7 @@ test-target()
 {
     type=$1
     test-target-low "type-${type}" "${type}" ""
+    test-target-low "type-${type}" "${type}" ""
 }
 
 mkdir -p /tmp/test

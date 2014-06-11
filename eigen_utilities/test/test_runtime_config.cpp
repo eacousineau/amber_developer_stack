@@ -1,8 +1,5 @@
 #include <gtest/gtest.h>
 
-#ifdef NDEBUG
-    #undef NDEBUG
-#endif
 #include <eigen_utilities/runtime_config.hpp>
 
 #include <Eigen/Dense>
@@ -12,24 +9,23 @@
 
 TEST(eigen_utilities, check_disabled)
 {
-    int counter;
-    counter = eigen_utilities::disable_malloc();
-    EXPECT_EQ(1, counter);
-    EXPECT_FALSE(eigen_utilities::is_malloc_enabled());
+    EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
+    
     {
         eigen_utilities::DisableMallocScope scope;
-        EXPECT_EQ(2, scope.getCounter());
-        EXPECT_FALSE(eigen_utilities::is_malloc_enabled());
+        EXPECT_TRUE(scope.wasMallocPreviouslyEnabled());
+        EXPECT_FALSE(Eigen::internal::is_malloc_allowed());
+        
+        {
+            eigen_utilities::DisableMallocScope scope;
+            EXPECT_FALSE(scope.wasMallocPreviouslyEnabled());
+            EXPECT_FALSE(Eigen::internal::is_malloc_allowed());
+        }
+        
         EXPECT_FALSE(Eigen::internal::is_malloc_allowed());
     }
-    counter = eigen_utilities::enable_malloc();
-    EXPECT_EQ(0, counter);
-    EXPECT_TRUE(eigen_utilities::is_malloc_enabled());
-}
-
-TEST(eigen_utilities, check_bad_disable)
-{
-    EXPECT_THROW(eigen_utilities::enable_malloc(), common::assert_error);
+    
+    EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
 }
 
 TEST(eigen_utilities, check_alloc)
@@ -52,14 +48,14 @@ TEST(eigen_utilities, check_alloc)
         EXPECT_THROW(
             Eigen::MatrixXd blank;
             blank.resize(4, 4);
-        , common::assert_error);
+        , eigen_utilities::assert_error);
         
         // Check nesting once more
         {
             eigen_utilities::DisableMallocScope scope;
             EXPECT_THROW(
                 Eigen::VectorXd vec(5);
-            , common::assert_error);
+            , eigen_utilities::assert_error);
         }
     }
     
@@ -72,15 +68,19 @@ TEST(eigen_utilities, check_alloc)
     }
 }
 
-#ifdef CHECK_EXTERN
-// Forward declare stuff from other source files with different sybmols
+/// @warning When using different compiler optimization flags (namely debug), inlined functions may be actually not be inlined
+/// For this reason, these 'extern' checks are disabled
+
+#ifdef EIGEN_UTILITIES_CHECK_EXTERN
+// Forward declare stuff from other source files with different preprocessor values
+
 namespace test_runtime_config_ndebug
 {
     /**
      * @brief check_alloc Allocate a dynamically-sized matrix in a source file NDEBUG defined (where malloc() switches should have no effect)
-     * @return Return the reference counter when eigen_utilites::enable_malloc() is called (should always be zero)
+     * @return Return if malloc was previously disabled
      */
-    int resize_matrix_calling_disable();
+    bool resize_matrix_calling_disable();
 }
 
 namespace test_runtime_config_clean_eigen
@@ -105,11 +105,11 @@ TEST(eigen_utilities, check_alloc_extern)
         eigen_utilities::DisableMallocScope scope;
         
         // Check for source file with NDEBUG defined
-        int counter = -1;
+        int old_value = true;
         EXPECT_NO_THROW(
-            counter = test_runtime_config_ndebug::resize_matrix_calling_disable();
+            old_value = test_runtime_config_ndebug::resize_matrix_calling_disable();
         );
-        EXPECT_EQ(0, counter);
+        EXPECT_FALSE(old_value);
         
         // Check for source file with only Eigen included
         EXPECT_NO_THROW(
@@ -119,7 +119,7 @@ TEST(eigen_utilities, check_alloc_extern)
         // Double-check for functions included in this file
         EXPECT_THROW(
             resize_matrix();
-        , common::assert_error);
+        , eigen_utilities::assert_error);
     }
 }
 #endif
