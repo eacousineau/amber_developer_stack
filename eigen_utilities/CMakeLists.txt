@@ -32,11 +32,15 @@ catkin_package(
    ${PROJECT_NAME}
 )
 
-option(EIGEN_UTILITIES_CHECK_EXTERN "Enable checking of compiling source files with different preprocessor flags" OFF)
-add_definitions(-DEIGEN_UTILITIES_DEBUG)
+#############
+## Options ##
+#############
 
-if(EIGEN_UTILITIES_CHECK_EXTERN)
-  add_definitions(-DEIGEN_UTILITIES_CHECK_EXTERN)
+option(EIGEN_UTILITIES_TEST_EXTERN "Enable testing of compiling separate translation units / source files with different preprocessor flags" OFF)
+option(EIGEN_UTILITIES_NDEBUG "Disable debug information" OFF)
+
+if(EIGEN_UTILITIES_NDEBUG)
+  add_definitions(-DEIGEN_UTILITIES_NDEBUG)
 endif()
 
 ###########
@@ -59,9 +63,15 @@ include_directories(
 ## Testing ##
 #############
 
+set(TEST_SRCS test/test_runtime_config.cpp)
+
+if(EIGEN_UTILITIES_TEST_EXTERN)
+  add_definitions(-DEIGEN_UTILITIES_TEST_EXTERN)
+  list(APPEND TEST_SRCS
+    test/test_runtime_config_ndebug.cpp
+    test/test_runtime_config_clean_eigen.cpp
+  )
+endif()
+
 ## Add gtest based cpp test target and link libraries
-catkin_add_gtest(${PROJECT_NAME}-test
-  test/test_runtime_config.cpp
-  test/test_runtime_config_ndebug.cpp
-  test/test_runtime_config_clean_eigen.cpp
-)
+catkin_add_gtest(${PROJECT_NAME}-test ${TEST_SRCS})

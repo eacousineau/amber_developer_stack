@@ -1,6 +1,6 @@
 // Disable debugging in this translation unit
-#ifdef EIGEN_UTILITIES_DEBUG
-    #undef EIGEN_UTILITIES_DEBUG
+#ifndef EIGEN_UTILITIES_NDEBUG
+    #define EIGEN_UTILITIES_NDEBUG
 #endif
 
 #include <eigen_utilities/runtime_config.hpp>

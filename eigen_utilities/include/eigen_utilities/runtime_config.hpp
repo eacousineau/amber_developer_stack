@@ -15,8 +15,8 @@
 
 #include <common_assert/common_assert.hpp>
 
-// Use EIGEN_UTILITIES_DEBUG instead of !NDEBUG for more flexibility
-#ifdef EIGEN_UTILITIES_DEBUG
+// Use EIGEN_UTILITIES_NDEBUG instead of NDEBUG for more flexibility
+#ifndef EIGEN_UTILITIES_NDEBUG
 
     /// @note For my version of eigen3, `dpkg -s libeigen3-dev` on Ubuntu 12.04 yields "3.0.5-1",
     /// there are no include or #ifdef guards for EIGEN_INITIALIZE_MATRICES_BY_NAN, only
@@ -49,6 +49,22 @@
     #endif
     #define eigen_assert(x)  common_assert_msg_ex(x, "[None]", eigen_utilities::assert_error)
 
+#else
+    // Redeclare for compatibility
+    namespace Eigen
+    {
+        namespace internal
+        {
+            inline bool is_malloc_allowed()
+            {
+                return true;
+            }
+            inline bool set_is_malloc_allowed(bool new_value)
+            {
+                common_assert(false && "No debugging enabled, this function should not be called");
+            }
+        }
+    }
 #endif
 
 namespace eigen_utilities
@@ -66,13 +82,28 @@ public:
 };
 
 /**
+ * @brief Add inline function as a mechanism to check compilation flags
+ */
+#ifndef EIGEN_UTILITIES_NDEBUG
+    inline bool is_debug_enabled()
+    {
+        return true;
+    }
+#else
+    inline bool is_debug_enabled()
+    {
+        return false;
+    }
+#endif
+
+/**
  * @brief Disable malloc() within a certain scope by storing previous value
  */
 class DisableMallocScope
 {
     bool old_value;
 public:
-    #ifdef EIGEN_RUNTIME_NO_MALLOC
+    #ifndef EIGEN_UTILITIES_NDEBUG
         inline DisableMallocScope()
         {
             old_value = Eigen::internal::is_malloc_allowed();
