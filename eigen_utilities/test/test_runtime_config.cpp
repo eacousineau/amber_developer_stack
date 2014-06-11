@@ -1,38 +1,41 @@
 #include <gtest/gtest.h>
 
-#ifdef NDEBUG
-    #undef NDEBUG
+#ifdef EIGEN_UTILITIES_NDEBUG
+    #warning "EIGEN_UTILITIES_NDEBUG was enabled. Using alternative unittests."
 #endif
 #include <eigen_utilities/runtime_config.hpp>
 
 #include <Eigen/Dense>
 
-/// @todo Mix source files with and without NDEBUG and runtime_config
-/// Mix the function calls
+#ifndef EIGEN_UTILITIES_NDEBUG
 
-TEST(eigen_utilities, check_disabled)
+TEST(eigen_utilities_debug, check_flags)
 {
-    int counter;
-    counter = eigen_utilities::disable_malloc();
-    EXPECT_EQ(1, counter);
-    EXPECT_FALSE(eigen_utilities::is_malloc_enabled());
+    EXPECT_TRUE(eigen_utilities::is_debug_enabled());
+}
+
+TEST(eigen_utilities_debug, check_disabled)
+{
+    EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
+    
     {
         eigen_utilities::DisableMallocScope scope;
-        EXPECT_EQ(2, scope.getCounter());
-        EXPECT_FALSE(eigen_utilities::is_malloc_enabled());
+        EXPECT_TRUE(scope.wasMallocPreviouslyEnabled());
+        EXPECT_FALSE(Eigen::internal::is_malloc_allowed());
+        
+        {
+            eigen_utilities::DisableMallocScope scope;
+            EXPECT_FALSE(scope.wasMallocPreviouslyEnabled());
+            EXPECT_FALSE(Eigen::internal::is_malloc_allowed());
+        }
+        
         EXPECT_FALSE(Eigen::internal::is_malloc_allowed());
     }
-    counter = eigen_utilities::enable_malloc();
-    EXPECT_EQ(0, counter);
-    EXPECT_TRUE(eigen_utilities::is_malloc_enabled());
+    
+    EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
 }
 
-TEST(eigen_utilities, check_bad_disable)
-{
-    EXPECT_THROW(eigen_utilities::enable_malloc(), common::assert_error);
-}
-
-TEST(eigen_utilities, check_alloc)
+TEST(eigen_utilities_debug, check_alloc)
 {
     /// @note When the exception is thrown during a resize, it dies on the deconstructor
     /// if the variable is scoped outside of the resize() statement. Most likely due to the
@@ -52,14 +55,14 @@ TEST(eigen_utilities, check_alloc)
         EXPECT_THROW(
             Eigen::MatrixXd blank;
             blank.resize(4, 4);
-        , common::assert_error);
+        , eigen_utilities::assert_error);
         
         // Check nesting once more
         {
             eigen_utilities::DisableMallocScope scope;
             EXPECT_THROW(
                 Eigen::VectorXd vec(5);
-            , common::assert_error);
+            , eigen_utilities::assert_error);
         }
     }
     
@@ -72,15 +75,19 @@ TEST(eigen_utilities, check_alloc)
     }
 }
 
-#ifdef CHECK_EXTERN
-// Forward declare stuff from other source files with different sybmols
+/// @warning When using different compiler optimization flags (namely debug), inlined functions may be actually not be inlined
+/// For this reason, these 'extern' checks are disabled
+
+#ifdef EIGEN_UTILITIES_TEST_EXTERN
+// Forward declare stuff from other source files with different preprocessor values
+
 namespace test_runtime_config_ndebug
 {
     /**
      * @brief check_alloc Allocate a dynamically-sized matrix in a source file NDEBUG defined (where malloc() switches should have no effect)
-     * @return Return the reference counter when eigen_utilites::enable_malloc() is called (should always be zero)
+     * @return Return if malloc was previously disabled
      */
-    int resize_matrix_calling_disable();
+    bool resize_matrix_calling_disable();
 }
 
 namespace test_runtime_config_clean_eigen
@@ -98,18 +105,19 @@ int resize_matrix()
     blank.resize(5, 5);
 }
 
-TEST(eigen_utilities, check_alloc_extern)
+TEST(eigen_utilities_debug, check_alloc_extern)
 {
     // Check alloc when including from source files without the MALLOC definition defined
     {
         eigen_utilities::DisableMallocScope scope;
         
         // Check for source file with NDEBUG defined
-        int counter = -1;
+        int old_value = true;
         EXPECT_NO_THROW(
-            counter = test_runtime_config_ndebug::resize_matrix_calling_disable();
+            old_value = test_runtime_config_ndebug::resize_matrix_calling_disable();
         );
-        EXPECT_EQ(0, counter);
+        // Malloc should not have been disabled by this source file
+        EXPECT_TRUE(old_value);
         
         // Check for source file with only Eigen included
         EXPECT_NO_THROW(
@@ -119,7 +127,7 @@ TEST(eigen_utilities, check_alloc_extern)
         // Double-check for functions included in this file
         EXPECT_THROW(
             resize_matrix();
-        , common::assert_error);
+        , eigen_utilities::assert_error);
     }
 }
 #endif
@@ -147,6 +155,72 @@ TEST(eigen_utilities, check_zero)
 //    EXPECT_TRUE((blank.array() != blank.array()).all());
 //    std::cout << blank << std::endl;
 //}
+
+#else
+
+TEST(eigen_utilities_no_debug, check_flags)
+{
+    std::cout << "[ warning ] These unittests are for debugging being disabled" << std::endl;
+    EXPECT_FALSE(eigen_utilities::is_debug_enabled());
+}
+
+TEST(eigen_utilities_no_debug, check_disabled)
+{
+    EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
+    
+    {
+        eigen_utilities::DisableMallocScope scope;
+        EXPECT_TRUE(scope.wasMallocPreviouslyEnabled());
+        EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
+        
+        {
+            eigen_utilities::DisableMallocScope scope;
+            EXPECT_TRUE(scope.wasMallocPreviouslyEnabled());
+            EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
+        }
+        
+        EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
+    }
+    
+    EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
+}
+
+TEST(eigen_utilities_no_debug, check_alloc)
+{
+    // Expect no errors at all
+    
+    {
+        EXPECT_NO_THROW(
+            Eigen::MatrixXd blank;
+            blank.resize(2, 2)
+        );
+    }
+    
+    {
+        eigen_utilities::DisableMallocScope scope;
+        EXPECT_NO_THROW(
+            Eigen::MatrixXd blank;
+            blank.resize(4, 4);
+        );
+        
+        // Check nesting once more
+        {
+            eigen_utilities::DisableMallocScope scope;
+            EXPECT_NO_THROW(
+                Eigen::VectorXd vec(5);
+            );
+        }
+    }
+    
+    {
+        EXPECT_NO_THROW(
+            Eigen::MatrixXd blank;
+            blank.resize(10, 10)
+        );
+    }
+}
+
+#endif
 
 int main(int argc, char **argv)
 {

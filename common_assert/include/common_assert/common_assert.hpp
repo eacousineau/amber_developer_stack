@@ -23,7 +23,7 @@ public:
 }
 
 /// @todo Place in another package
-#define common_assert_msg(expr, msg) \
+#define common_assert_msg_ex(expr, msg, type) \
     if (!(expr)) \
     { \
         std::ostringstream os; \
@@ -31,8 +31,11 @@ public:
             "File: " << __FILE__ ":" << __LINE__ << std::endl << \
             "Function: " << __PRETTY_FUNCTION__ << std::endl << \
             "Message: " << msg << std::endl; \
-        throw common::assert_error(os.str()); \
+        throw type(os.str()); \
     }
+
+/// @todo Place in another package
+#define common_assert_msg(expr, msg) common_assert_msg_ex(expr, msg, common::assert_error)
 
 #define common_assert(expr) \
     common_assert_msg(expr, "[None]")

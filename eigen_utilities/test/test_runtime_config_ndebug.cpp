@@ -1,5 +1,6 @@
-#ifndef NDEBUG
-    #define NDEBUG
+// Disable debugging in this translation unit
+#ifndef EIGEN_UTILITIES_NDEBUG
+    #define EIGEN_UTILITIES_NDEBUG
 #endif
 
 #include <eigen_utilities/runtime_config.hpp>
@@ -10,12 +11,12 @@
 namespace test_runtime_config_ndebug
 {
 
-int resize_matrix_calling_disable()
+bool resize_matrix_calling_disable()
 {
     eigen_utilities::DisableMallocScope scope;
     Eigen::MatrixXd blank;
     blank.resize(5, 5);
-    return scope.getCounter();
+    return scope.wasMallocPreviouslyEnabled();
 }
     
 }
