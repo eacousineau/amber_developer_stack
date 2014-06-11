@@ -47,6 +47,7 @@ include_directories(
 ## Declare a cpp library
 add_library(yaml_utilities
   src/yaml_utilities.cpp
+  src/binary_utilities.cpp
 )
 
 # Specify libraries to link a library or executable target against
@@ -96,5 +97,8 @@ target_link_libraries(yaml_utilities
 #############
 
 ## Add gtest based cpp test target and link libraries
-catkin_add_gtest(${PROJECT_NAME}-test test/test_${PROJECT_NAME})
+catkin_add_gtest(${PROJECT_NAME}-test
+  test/test_${PROJECT_NAME}.cpp
+  test/test_binary_utilities.cpp
+)
 target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})

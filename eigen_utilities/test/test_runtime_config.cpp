@@ -1,9 +1,39 @@
 #include <gtest/gtest.h>
 
-#undef NDEBUG
+#ifdef NDEBUG
+    #undef NDEBUG
+#endif
 #include <eigen_utilities/runtime_config.hpp>
 
 #include <Eigen/Dense>
+
+// Forward declare stuff from other source files with different sybmols
+namespace test_runtime_config_ndebug
+{
+    /**
+     * @brief check_alloc Allocate a dynamically-sized matrix in a source file NDEBUG defined (where malloc() switches should have no effect)
+     * @return Return the reference counter when eigen_utilites::enable_malloc() is called (should always be zero)
+     */
+    int resize_matrix_calling_disable();
+}
+
+namespace test_runtime_config_clean_eigen
+{
+    /**
+     * @brief check_alloc Allocate a dynamically-sized matrix in a source file with a clean include of Eigen
+     */
+    void resize_matrix();
+}
+
+int resize_matrix()
+{
+    eigen_utilities::DisableMallocScope scope;
+    Eigen::MatrixXd blank;
+    blank.resize(5, 5);
+}
+
+/// @todo Mix source files with and without NDEBUG and runtime_config
+/// Mix the function calls
 
 TEST(eigen_utilities, check_disabled)
 {
@@ -65,7 +95,31 @@ TEST(eigen_utilities, check_alloc)
             blank.resize(10, 10)
         );
     }
-    
+}
+
+TEST(eigen_utilities, check_alloc_extern)
+{
+    // Check alloc when including from source files without the MALLOC definition defined
+    {
+        eigen_utilities::DisableMallocScope scope;
+        
+        // Check for source file with NDEBUG defined
+        int counter = -1;
+        EXPECT_NO_THROW(
+            counter = test_runtime_config_ndebug::resize_matrix_calling_disable();
+        );
+        EXPECT_EQ(0, counter);
+        
+        // Check for source file with only Eigen included
+        EXPECT_NO_THROW(
+            test_runtime_config_clean_eigen::resize_matrix();
+        );
+        
+        // Double-check for functions included in this file
+        EXPECT_THROW(
+            resize_matrix();
+        , common::assert_error);
+    }
 }
 
 TEST(eigen_utilities, check_zero)
