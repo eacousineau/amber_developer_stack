@@ -28,8 +28,6 @@ catkin_package(
   CATKIN_DEPENDS
     common_assert
   DEPENDS eigen3
-  LIBRARIES
-   ${PROJECT_NAME}
 )
 
 #############
