@@ -13,7 +13,7 @@ namespace test_runtime_config_ndebug
 
 bool resize_matrix_calling_disable()
 {
-    eigen_utilities::DisableMallocScope scope;
+    eigen_utilities::MallocAllowedScope scope(false);
     Eigen::MatrixXd blank;
     blank.resize(5, 5);
     return scope.wasMallocPreviouslyEnabled();

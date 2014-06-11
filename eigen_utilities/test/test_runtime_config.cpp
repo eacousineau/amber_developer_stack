@@ -19,14 +19,20 @@ TEST(eigen_utilities_debug, check_disabled)
     EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
     
     {
-        eigen_utilities::DisableMallocScope scope;
+        eigen_utilities::MallocAllowedScope scope(false);
         EXPECT_TRUE(scope.wasMallocPreviouslyEnabled());
         EXPECT_FALSE(Eigen::internal::is_malloc_allowed());
         
         {
-            eigen_utilities::DisableMallocScope scope;
+            eigen_utilities::MallocAllowedScope scope(false);
             EXPECT_FALSE(scope.wasMallocPreviouslyEnabled());
             EXPECT_FALSE(Eigen::internal::is_malloc_allowed());
+            
+            {
+                eigen_utilities::MallocAllowedScope scope(true);
+                EXPECT_FALSE(scope.wasMallocPreviouslyEnabled());
+                EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
+            }
         }
         
         EXPECT_FALSE(Eigen::internal::is_malloc_allowed());
@@ -51,7 +57,7 @@ TEST(eigen_utilities_debug, check_alloc)
     
     // Now expect it to error out
     {
-        eigen_utilities::DisableMallocScope scope;
+        eigen_utilities::MallocAllowedScope scope(false);
         EXPECT_THROW(
             Eigen::MatrixXd blank;
             blank.resize(4, 4);
@@ -59,10 +65,18 @@ TEST(eigen_utilities_debug, check_alloc)
         
         // Check nesting once more
         {
-            eigen_utilities::DisableMallocScope scope;
+            eigen_utilities::MallocAllowedScope scope(false);
             EXPECT_THROW(
                 Eigen::VectorXd vec(5);
             , eigen_utilities::assert_error);
+        }
+        
+        // Check reenabling
+        {
+            eigen_utilities::MallocAllowedScope scope(true);
+            EXPECT_NO_THROW(
+                Eigen::VectorXd vec(5);
+            );
         }
     }
     
@@ -100,7 +114,7 @@ namespace test_runtime_config_clean_eigen
 
 int resize_matrix()
 {
-    eigen_utilities::DisableMallocScope scope;
+    eigen_utilities::MallocAllowedScope scope(false);
     Eigen::MatrixXd blank;
     blank.resize(5, 5);
 }
@@ -109,7 +123,7 @@ TEST(eigen_utilities_debug, check_alloc_extern)
 {
     // Check alloc when including from source files without the MALLOC definition defined
     {
-        eigen_utilities::DisableMallocScope scope;
+        eigen_utilities::MallocAllowedScope scope(false);
         
         // Check for source file with NDEBUG defined
         int old_value = true;
@@ -169,12 +183,12 @@ TEST(eigen_utilities_no_debug, check_disabled)
     EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
     
     {
-        eigen_utilities::DisableMallocScope scope;
+        eigen_utilities::MallocAllowedScope scope(false);
         EXPECT_TRUE(scope.wasMallocPreviouslyEnabled());
         EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
         
         {
-            eigen_utilities::DisableMallocScope scope;
+            eigen_utilities::MallocAllowedScope scope(false);
             EXPECT_TRUE(scope.wasMallocPreviouslyEnabled());
             EXPECT_TRUE(Eigen::internal::is_malloc_allowed());
         }
@@ -197,7 +211,7 @@ TEST(eigen_utilities_no_debug, check_alloc)
     }
     
     {
-        eigen_utilities::DisableMallocScope scope;
+        eigen_utilities::MallocAllowedScope scope(false);
         EXPECT_NO_THROW(
             Eigen::MatrixXd blank;
             blank.resize(4, 4);
@@ -205,7 +219,7 @@ TEST(eigen_utilities_no_debug, check_alloc)
         
         // Check nesting once more
         {
-            eigen_utilities::DisableMallocScope scope;
+            eigen_utilities::MallocAllowedScope scope(false);
             EXPECT_NO_THROW(
                 Eigen::VectorXd vec(5);
             );
