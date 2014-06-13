@@ -100,7 +100,7 @@ TEST(yaml_utilities, WriteAndReadStreamStaticSized)
     EXPECT_EQ(x_expected, x_actual);
 }
 
-TEST(yaml_utilities, BinaryReadAndWrite)
+TEST(yaml_utilities, BinaryReadAndWriteVector)
 {
     {
         VectorXd x_expected(5);
@@ -127,6 +127,41 @@ TEST(yaml_utilities, BinaryReadAndWrite)
         cout << out.c_str() << endl;
         
         VectorXd x_actual;
+        Node node;
+        yaml_read_string(out.c_str(), node);
+        yaml_read_binary_dual(node, x_actual);
+        
+        EXPECT_EQ(x_expected, x_actual);
+    }
+}
+
+TEST(yaml_utilities, BinaryReadAndWriteMatrix)
+{
+    MatrixXd x_expected(2, 3);
+    x_expected <<
+        1, 2, 3,
+        4, 5, 6;
+    {
+        Emitter out;
+        yaml_write_binary(out, x_expected);
+        
+        cout << out.c_str() << endl;
+        
+        MatrixXd x_actual;
+        Node node;
+        yaml_read_string(out.c_str(), node);
+        yaml_read_binary(node, x_actual);
+        
+        EXPECT_EQ(x_expected, x_actual);
+    }
+    
+    {
+        Emitter out;
+        yaml_write_binary_dual(out, x_expected);
+        
+        cout << out.c_str() << endl;
+        
+        MatrixXd x_actual;
         Node node;
         yaml_read_string(out.c_str(), node);
         yaml_read_binary_dual(node, x_actual);
