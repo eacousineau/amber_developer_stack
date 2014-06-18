@@ -13,7 +13,7 @@
 #ifndef EIGEN_UTILITIES_RUNTIME_CONFIG_H_
     #define EIGEN_UTILITIES_RUNTIME_CONFIG_H_
 
-#include <common_assert/common_assert.hpp>
+#include <eigen_utilities/assert_error.hpp>
 
 // Use EIGEN_UTILITIES_NDEBUG instead of NDEBUG for more flexibility
 #ifndef EIGEN_UTILITIES_NDEBUG
@@ -69,17 +69,6 @@
 
 namespace eigen_utilities
 {
-
-/**
- * @brief Specialized assert_error
- */
-class assert_error : public common::assert_error
-{
-public:
-    inline assert_error(const std::string &message)
-        : common::assert_error(message)
-    { }
-};
 
 /**
  * @brief Add inline function as a mechanism to check compilation flags
