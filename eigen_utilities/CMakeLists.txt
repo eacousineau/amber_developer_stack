@@ -61,7 +61,10 @@ include_directories(
 ## Testing ##
 #############
 
-set(TEST_SRCS test/test_runtime_config.cpp)
+set(TEST_SRCS
+  test/test_runtime_config.cpp
+  test/test_assert_size.cpp
+)
 
 if(EIGEN_UTILITIES_TEST_EXTERN)
   add_definitions(-DEIGEN_UTILITIES_TEST_EXTERN)
