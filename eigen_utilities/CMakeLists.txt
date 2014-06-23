@@ -64,6 +64,7 @@ include_directories(
 set(TEST_SRCS
   test/test_runtime_config.cpp
   test/test_assert_size.cpp
+  test/test_compare_utilities.cpp
 )
 
 if(EIGEN_UTILITIES_TEST_EXTERN)
