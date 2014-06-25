@@ -1,5 +1,7 @@
-# README
+# `yaml_utilities`
 
-The purpose of this project is to provide a simple interface for easily loading `yaml`, using [yaml-cpp](https://code.google.com/p/yaml-cpp/).
+## Purpose
 
-In addition, this provides wrappers for loading and dumping `<Eigen/Dense>` `Matrix`'s, both dynamically and statically sized.
+Provide a simple interface for easily loading `yaml`, using [yaml-cpp](https://code.google.com/p/yaml-cpp/).
+
+This also provides an implementation of base 64 encoding/decoding take from later versions of yaml for use with versions with base 64 functionality.

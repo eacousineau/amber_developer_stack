@@ -9,6 +9,7 @@
   * @author Eric Cousineau
   * @ref http://eigen.tuxfamily.org/dox-devel/TopicPreprocessorDirectives.html
   * @ref http://www.orocos.org/forum/rtt/rtt-dev/nice-trick-those-using-eigen-realtime-code
+  * @todo Resolve linking issues when dealing with inline'd functions being collected in debug mode
   */
 #ifndef EIGEN_UTILITIES_RUNTIME_CONFIG_H_
     #define EIGEN_UTILITIES_RUNTIME_CONFIG_H_
