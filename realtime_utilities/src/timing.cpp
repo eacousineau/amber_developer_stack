@@ -8,7 +8,7 @@ namespace realtime_utilities
 
 bool enable_realtime(bool throw_if_error)
 {
-    // Following from hrt_meka_main.c    
+    // Following from example real-time code
     sched_param param;
     int policy = SCHED_FIFO;
     param.sched_priority = sched_get_priority_max(policy);
