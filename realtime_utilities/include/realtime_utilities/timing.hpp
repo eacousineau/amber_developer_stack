@@ -109,6 +109,13 @@ public:
     {
         mode = 0;
     }
+
+    /** @brief Restart timer */
+    inline void restart()
+    {
+        reset();
+        start();
+    }
     
     /**
      * @brief elapsed Get the elapsed time
