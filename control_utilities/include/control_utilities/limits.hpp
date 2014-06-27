@@ -102,16 +102,33 @@ class RateLimiter
     double prev_value_;
     int result_;
 public:
-    inline RateLimiter(double rate_min, double rate_max)
-        : rate_min_(rate_min), rate_max_(rate_max)
+    inline RateLimiter()
     {
+        setLimits(NAN, NAN);
+        reset();
+    }
+    inline RateLimiter(double rate_min, double rate_max)
+    {
+        setLimits(rate_min, rate_max);
         reset();
     }
 
     inline RateLimiter(double rate_max)
-        : rate_min_(-rate_max), rate_max_(rate_max)
     {
+        setLimits(rate_max);
         reset();
+    }
+
+    inline void setLimits(double rate_max)
+    {
+        rate_min_ = -rate_max;
+        rate_max_ = rate_max;
+    }
+
+    inline void setLimits(double rate_min, double rate_max)
+    {
+        rate_min_ = rate_min;
+        rate_max_ = rate_max;
     }
 
     inline void reset(double cur_value = NAN)
