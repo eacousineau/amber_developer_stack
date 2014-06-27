@@ -6,8 +6,9 @@ using namespace control_utilities;
 
 #define LENGTH(x) sizeof(x) / sizeof(x[0])
 
-TEST(limits_test, clamp)
+TEST(limits_test, clamp_values)
 {
+    // Check a series of values
     double values[] = {-1.5, -0.5, 0., 0.5, 1.5};
     double min = -1.;
     double max = 1.;
@@ -17,7 +18,7 @@ TEST(limits_test, clamp)
     int count = LENGTH(values);
     for (int i = 0; i < count; ++i)
     {
-        int result;
+        int result = -2;
         double clamped = clamp(values[i], min, max, &result);
         EXPECT_EQ(clamped_expected[i], clamped);
         EXPECT_EQ(results_expected[i], result);
@@ -25,12 +26,45 @@ TEST(limits_test, clamp)
         double clamped_no_result = clamp(values[i], min, max);
         EXPECT_EQ(clamped, clamped_no_result);
     }
+}
 
-    {
-        int result;
-        EXPECT_TRUE(std::isnan(clamp(NAN, min, max, &result)));
-        EXPECT_EQ(0, result);
-    }
+TEST(limits_test, clamp_nan)
+{
+    // Check clamping NAN
+    double min = -1.;
+    double max = 1.;
+    int result = -2;
+    EXPECT_TRUE(std::isnan(clamp(NAN, min, max, &result)));
+    EXPECT_EQ(0, result);
+}
+
+TEST(limits_test, clamp_no_min)
+{
+    // No lower bound
+    double min = -1.;
+    double max = 1.;
+    int result = -2;
+    EXPECT_EQ(2 * min, clamp(2 * min, NAN, max, &result));
+    EXPECT_EQ(0, result);
+}
+
+TEST(limits_test, clamp_no_max)
+{
+    // No upper bound
+    double min = -1.;
+    double max = 1.;
+    int result = -2;
+    EXPECT_EQ(2 * max, clamp(2 * max, min, NAN, &result));
+    EXPECT_EQ(0, result);
+}
+
+TEST(limits_test, clamp_no_bounds)
+{
+    // No bounds
+    double max = 1.;
+    int result = -2;
+    EXPECT_EQ(2 * max, clamp(2 * max, NAN, NAN, &result));
+    EXPECT_EQ(0, result);
 }
 
 TEST(limits_test, rate_limit)
@@ -46,7 +80,7 @@ TEST(limits_test, rate_limit)
     int count = LENGTH(cur_values);
     for (int i = 0; i < count; ++i)
     {
-        int result;
+        int result = -2;
         double clamped = rate_limit(prev_value, cur_values[i], dt, rate_min, rate_max, &result);
         EXPECT_EQ(clamped_expected[i], clamped);
         EXPECT_EQ(results_expected[i], result);
@@ -56,11 +90,15 @@ TEST(limits_test, rate_limit)
     }
 
     {
-        int result;
         // Check initialization
+        int result = -2;
         EXPECT_EQ(prev_value, rate_limit(NAN, prev_value, dt, rate_min, rate_max, &result));
         EXPECT_EQ(0, result);
+    }
+
+    {
         // Check bad values
+        int result = -2;
         EXPECT_TRUE(std::isnan(rate_limit(prev_value, NAN, dt, rate_min, rate_max, &result)));
         EXPECT_EQ(0, result);
     }
