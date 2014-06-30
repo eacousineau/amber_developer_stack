@@ -5,6 +5,18 @@
 using namespace Eigen;
 using namespace eigen_utilities;
 
+TEST(eigen_utilities_test, hasnan)
+{
+    MatrixXd X(2, 2);
+    X <<
+        0, 1,
+        2, 3;
+    EXPECT_FALSE(hasnan(X));
+    
+    X(0) = NAN;
+    EXPECT_TRUE(hasnan(X));
+}
+
 TEST(eigen_utilities_test, nan_compare)
 {
     

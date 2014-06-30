@@ -22,6 +22,15 @@ inline double nan_compare(double a, double b)
 }
 
 /**
+ * @brief Check if there are any NAN elements
+ */
+    template<typename Derived>
+inline bool hasnan(const Eigen::MatrixBase<Derived> &X)
+{
+    return (X.array() != X.array()).any();
+}
+
+/**
  * @brief Zero out all NAN matrix entries
  * @ref http://listengine.tuxfamily.org/lists.tuxfamily.org/eigen/2012/01/msg00020.html
  */
