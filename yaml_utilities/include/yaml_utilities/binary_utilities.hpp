@@ -51,6 +51,14 @@ void yaml_read_binary(const YAML::Node &node, T &data)
     yaml_read_binary(node, &data, sizeof(T));
 }
 
+template<typename T>
+void yaml_read_binary(const YAML::Node &node, std::vector<T> &data)
+{
+    data.resize(node.size());
+    for (int i = 0; i < node.size(); ++i)
+        yaml_read_binary(node[i], data[i]);
+}
+
 /**
  * @brief yaml_read_binary_dual Read a 2-tuple of an actual representation (for human reading) and binary (for machine reading)
  */
@@ -67,6 +75,16 @@ void yaml_write_binary(YAML::Emitter &out, const void *data, size_t size);
 void yaml_write_binary(YAML::Emitter &out, const T &data)
 {
     out << encode_base64((unsigned char*)&data, sizeof(data));
+}
+
+template<typename T>
+void yaml_write_binary(YAML::Emitter &out, const std::vector<T> &data)
+{
+    // Write a tuple of dual-representation
+    out << YAML::BeginSeq;
+    for (int i = 0; i < data.size(); ++i)
+        yaml_write_binary(out, data[i]);
+    out << YAML::EndSeq;
 }
 
     template<typename T>

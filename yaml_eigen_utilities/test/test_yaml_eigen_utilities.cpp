@@ -170,6 +170,29 @@ TEST(yaml_utilities, BinaryReadAndWriteMatrix)
     }
 }
 
+
+
+/**
+ * @brief VectorRead Read a stl vector of doubles into a dynamically sized vector
+ */
+TEST(yaml_utilities, BinaryReadAndWriteSTLVector)
+{
+    vector<double> expected;
+    expected << 1 << 2 << 3;
+    Emitter out;
+    out << Flow;
+    yaml_write_binary_dual(out, expected);
+    string input_str;
+    yaml_write_string(input_str, out);
+    cout << input_str << endl;
+
+    vector<double> actual;
+    Node node;
+    yaml_read_string(input_str, node);
+    yaml_read_binary_dual(node, actual);
+    EXPECT_EQ(expected, actual);
+}
+
 int main(int argc, char **argv)
 {
     testing::InitGoogleTest(&argc, argv);
