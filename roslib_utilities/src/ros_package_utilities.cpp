@@ -1,5 +1,6 @@
 /**
- * @author Eric Cousineau <eacousineau@gmail.com>
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
  */
 #include <ros/package.h>
 

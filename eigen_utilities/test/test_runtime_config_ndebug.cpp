@@ -1,3 +1,8 @@
+/**
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
+ */
+
 // Disable debugging in this translation unit
 #ifndef EIGEN_UTILITIES_NDEBUG
     #define EIGEN_UTILITIES_NDEBUG

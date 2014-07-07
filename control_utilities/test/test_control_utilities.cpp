@@ -1,3 +1,7 @@
+/**
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
+ */
 #include <gtest/gtest.h>
 
 #include <control_utilities/limits.hpp>

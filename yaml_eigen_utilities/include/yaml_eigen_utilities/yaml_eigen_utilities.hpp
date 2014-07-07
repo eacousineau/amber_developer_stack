@@ -1,6 +1,7 @@
 /**
  * @brief YAML functions for reading Eigen vectors and matrices
- * @author Eric Cousineau <eacousineau@gmail.com>
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
  */
 #ifndef _YAML_EIGEN_UTILITIES_HPP_
 #define _YAML_EIGEN_UTILITIES_HPP_

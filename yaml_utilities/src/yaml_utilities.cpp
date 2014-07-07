@@ -1,5 +1,6 @@
 /**
- * @author Eric Cousineau <eacousineau@gmail.com>
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
  */
 
 #ifndef _YAML_UTILITIES_YAML_UTILITIES_H
