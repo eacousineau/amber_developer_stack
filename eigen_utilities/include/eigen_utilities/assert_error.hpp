@@ -1,3 +1,7 @@
+/**
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
+ */
 #ifndef EIGEN_UTILITIES_COMMON_ASSERT_H_
     #define EIGEN_UTILITIES_COMMON_ASSERT_H_
 

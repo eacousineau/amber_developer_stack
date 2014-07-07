@@ -1,3 +1,7 @@
+/**
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
+ */
 #include <Eigen/Dense>
 
 // See test_runtime_config for more information

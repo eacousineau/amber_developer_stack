@@ -1,6 +1,7 @@
 /**
  * @brief Unittests for reading and writing Eigen structures in YAML
- * @author Eric Cousineau <eacousineau@gmail.com>
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
  */
 #include <gtest/gtest.h>
 

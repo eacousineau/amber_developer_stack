@@ -1,7 +1,9 @@
 /**
-  * @brief Add a simple implementation of reading binary for yaml-cpp 0.2.7 (with ros-groovy)
-  * @ref https://code.google.com/p/yaml-cpp/source/browse/src/binary.cpp?r=53943daa27837eb61e9cc1a74fe551285d0c6840
-  */
+ * @brief Add a simple implementation of reading binary for yaml-cpp 0.2.7 (with ros-groovy)
+ * @ref https://code.google.com/p/yaml-cpp/source/browse/src/binary.cpp?r=53943daa27837eb61e9cc1a74fe551285d0c6840
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
+ */
 #ifndef _YAML_UTILITIES_BINARY_UTILITIES_H
     #define _YAML_UTILITIES_BINARY_UTILITIES_H
 

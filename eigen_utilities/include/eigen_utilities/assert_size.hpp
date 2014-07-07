@@ -2,6 +2,8 @@
  * @brief Provide simple macros for checking the size of a matrix and giving informative errors
  * @note Currently uses common_assert_msg(). Could refactor to use a normal assert
  * @note Should be included after <runtime_config.hpp> !!!
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
  */
 
 #ifndef EIGEN_UTILITIES_ASSERT_SIZE_H_

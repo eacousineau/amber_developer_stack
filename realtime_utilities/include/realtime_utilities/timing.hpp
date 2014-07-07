@@ -1,3 +1,7 @@
+/**
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
+ */
 #ifndef _REALTIME_UTILITIES_TIMING_H
     #define _REALTIME_UTILITIES_TIMING_H
 

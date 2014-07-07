@@ -1,6 +1,7 @@
 /**
  * @brief Utility functions for ros/package
- * @author Eric Cousineau <eacousineau@gmail.com>
+ * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+ * Ames's AMBER Lab
  */
 #ifndef _COMMON_ROS_PACKAGE_UTILITIES_
     #define _COMMON_ROS_PACKAGE_UTILITIES_

@@ -1,5 +1,7 @@
 /**
   * @brief Define additional macros to change the runtime behavior of eigen
+  * @author Eric Cousineau <eacousineau@gmail.com>, member of Dr. Aaron
+  * Ames's AMBER Lab
   * Namely this initializes matrices by NAN, adds the ability to disable runtime allocation, and
   * provide mechanisms to enable and disable this runtime allocation (for better assurance in real-time
   * programming
