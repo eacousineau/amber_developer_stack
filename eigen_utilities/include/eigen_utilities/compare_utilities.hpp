@@ -35,6 +35,15 @@ inline bool hasnan(const Eigen::MatrixBase<Derived> &X)
 }
 
 /**
+ * @brief Check if all are NAN elements
+ */
+    template<typename Derived>
+inline bool isnan(const Eigen::MatrixBase<Derived> &X)
+{
+    return (X.array() != X.array()).all();
+}
+
+/**
  * @brief Zero out all NAN matrix entries
  * @ref http://listengine.tuxfamily.org/lists.tuxfamily.org/eigen/2012/01/msg00020.html
  */
