@@ -16,9 +16,15 @@ TEST(eigen_utilities_test, hasnan)
         0, 1,
         2, 3;
     EXPECT_FALSE(hasnan(X));
+    EXPECT_FALSE(isnan(X));
     
     X(0) = NAN;
     EXPECT_TRUE(hasnan(X));
+    EXPECT_FALSE(isnan(X));
+    
+    X.setConstant(NAN);
+    EXPECT_TRUE(hasnan(X));
+    EXPECT_TRUE(isnan(X));
 }
 
 TEST(eigen_utilities_test, nan_compare)
