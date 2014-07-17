@@ -6,6 +6,7 @@ project(roslib_utilities)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roslib
+  rospack
 )
 
 ## System dependencies are found with CMake's conventions
@@ -24,7 +25,7 @@ catkin_package(
  INCLUDE_DIRS include
  LIBRARIES roslib_utilities
 #  CATKIN_DEPENDS roslib
- DEPENDS roslib
+ DEPENDS roslib rospack
 )
 
 ###########
