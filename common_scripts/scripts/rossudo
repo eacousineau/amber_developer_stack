@@ -8,4 +8,4 @@
 secure_path="/opt/ros/hydro/bin:/opt/ros/hydro/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
 env_keep="PYTHONPATH ROS_MASTER_URI"
 
-sudo PATH="$secure_path" PYTHONPATH="$PYTHONPATH" ROS_MASTER_URI="$ROS_MASTER_URI" LD_LIBRARY_PATH="$LD_LIBRARY_PATH" "$@"
+sudo PATH="$secure_path" PYTHONPATH="$PYTHONPATH" ROS_MASTER_URI="$ROS_MASTER_URI" LD_LIBRARY_PATH="$LD_LIBRARY_PATH" ROS_PACKAGE_PATH="$ROS_PACKAGE_PATH" "$@"
