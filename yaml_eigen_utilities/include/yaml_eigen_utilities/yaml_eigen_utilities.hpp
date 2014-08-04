@@ -20,15 +20,27 @@ template<typename Derived>
 void eigen_resize_vector(const Node &in, Eigen::MatrixBase<Derived> &X)
 {
     // http://eigen.tuxfamily.org/dox/TopicFunctionTakingEigenTypes.html
-    X.derived().resize(in.size());
+    // Blech
+    if (in.Type() == YAML::NodeType::Scalar)
+        X.derived().resize(1);
+    else
+        X.derived().resize(in.size());
 }
 
 template<typename Derived>
 void eigen_read_vector(const Node &in, Eigen::MatrixBase<Derived> &X)
 {
-    common_assert_msg((uint)X.size() == (uint)in.size(), "Size not equal. Eigen = " << X.size() << ", Yaml = " << in.size());
-    for (uint i = 0; i < (uint)X.size(); ++i)
-        in[i] >> X(i);
+    if (in.Type() == YAML::NodeType::Scalar)
+    {
+        common_assert((uint)X.size() == 1);
+        in >> X(0);
+    }
+    else
+    {
+        common_assert_msg((uint)X.size() == (uint)in.size(), "Size not equal. Eigen = " << X.size() << ", Yaml = " << in.size());
+        for (uint i = 0; i < (uint)X.size(); ++i)
+            in[i] >> X(i);
+    }
 }
 
 template<typename Derived>
@@ -37,10 +49,10 @@ void eigen_resize_matrix(const Node &in, Eigen::MatrixBase<Derived> &X)
     uint rows = in.size();
     if (rows > 0)
     {
-        // If just one row, then resize to column vector
+        // If just one row, then resize to row vector
         uint cols = in[0].size();
         if (cols == 0)
-            X.derived().resize(rows, 1);
+            X.derived().resize(1, rows);
         else
             X.derived().resize(rows, in[0].size());
     }
