@@ -43,6 +43,11 @@ void yaml_read_default(const YAML::Node &doc, const K &key, T &value, const T &d
         value = def;
 }
 
+inline void yaml_read_default(const YAML::Node &doc, const std::string &key, std::string &value, const std::string &def = std::string())
+{
+    yaml_read_default<std::string, std::string>(doc, key, value, def);
+}
+
 template<typename K, typename T>
 T yaml_get_default(const YAML::Node &doc, const K &key, const T &def = T())
 {
