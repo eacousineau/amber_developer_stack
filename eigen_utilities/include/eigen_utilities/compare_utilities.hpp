@@ -82,8 +82,8 @@ inline double diff_relative_nonzero(double a, double b)
 /**
  * @brief See documentation for scalar version
  */
-    template<typename Derived>
-inline Eigen::MatrixXd diff_relative_nonzero(const Eigen::MatrixBase<Derived> &A, const Eigen::MatrixBase<Derived> &B)
+    template<typename DerivedA, typename DerivedB>
+inline Eigen::MatrixXd diff_relative_nonzero(const Eigen::MatrixBase<DerivedA> &A, const Eigen::MatrixBase<DerivedB> &B)
 {
     return ((A.array() != 0) * (B.array() != 0)).select((B - A).array() / A.array(), B - A);
 }
