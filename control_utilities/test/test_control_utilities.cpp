@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 
 #include <control_utilities/limits.hpp>
+#include <control_utilities/filters.hpp>
 
 using namespace control_utilities;
 
@@ -148,6 +149,38 @@ TEST(limits_test, RateLimiter)
 
         double stamped_clamped = stamped.update(dummy_dt, cur_values[i]);
         EXPECT_EQ(clamped, stamped_clamped);
+    }
+}
+
+TEST(filters_test, LowPass)
+{
+    double dt = 1. / 200;
+    double dt_cutoff = 1. / 25;
+    double alpha_expected = 1. / 9;
+    double alpha = low_pass_alpha(dt, dt_cutoff);
+
+    double tolerance = 1e-10;
+    EXPECT_LT(std::fabs(alpha_expected - alpha), tolerance);
+
+    {
+        double prev_filt = NAN;
+        double cur_raw = 18;
+        double cur_filt_expected = cur_raw;
+        EXPECT_EQ(cur_filt_expected, low_pass_first_order(alpha, prev_filt, cur_raw));
+
+        LowPassFilter filter(dt, dt_cutoff);
+        EXPECT_EQ(cur_filt_expected, filter.update(cur_raw));
+    }
+
+    {
+        double prev_filt = 9;
+        double cur_raw = 18;
+        double cur_filt_expected = 10;
+        EXPECT_EQ(cur_filt_expected, low_pass_first_order(alpha, prev_filt, cur_raw));
+
+        LowPassFilter filter(dt, dt_cutoff);
+        filter.reset(prev_filt);
+        EXPECT_EQ(cur_filt_expected, filter.update(cur_raw));
     }
 }
 
