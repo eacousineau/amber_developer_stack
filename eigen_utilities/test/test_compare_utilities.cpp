@@ -78,3 +78,26 @@ TEST(eigen_utilities_test, diff_relative_nonzero)
     EXPECT_LT(norm_nanless(C), tolerance); // expect to be small
     EXPECT_LT(diff_relative_nonzero(A(0, 0), B(0, 0)), tolerance);
 }
+
+TEST(eigen_utilities_test, set_nans)
+{
+    MatrixXd A(2, 2);
+    A <<
+         1, 2,
+         NAN, 4;
+    MatrixXd A_expected(2, 2);
+    A_expected <<
+         1, 2,
+         0, 4;
+    set_nans(A);
+    EXPECT_EQ(A_expected, A);
+
+    VectorXd b(2);
+    b <<
+         5, NAN;
+    VectorXd b_expected(2);
+    b_expected <<
+        5, 8;
+    set_nans(b, 8);
+    EXPECT_EQ(b_expected, b);
+}
