@@ -88,6 +88,23 @@ inline Eigen::MatrixXd diff_relative_nonzero(const Eigen::MatrixBase<DerivedA> &
     return ((A.array() != 0) * (B.array() != 0)).select((B - A).array() / A.array(), B - A);
 }
 
+inline double set_nans(double &X, double value = 0.)
+{
+    if (std::isnan(X))
+        X = value;
+    return X;
+}
+
+/**
+ * @brief Set all nan entries to a non-NAN value
+ */
+template<typename Derived>
+inline void set_nans(Eigen::MatrixBase<Derived> &X, double value = 0.)
+{
+    for (int i = 0; i < X.size(); ++i)
+        set_nans(X(i), value);
+}
+
 }
 
 #endif // EIGEN_UTILITIES_COMPARE_UTILITIES_H
