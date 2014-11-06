@@ -66,6 +66,7 @@ set(TEST_SRCS
   test/test_assert_size.cpp
   test/test_compare_utilities.cpp
   test/test_container_utilities.cpp
+  test/test_operator_utilities.cpp
 )
 
 if(EIGEN_UTILITIES_TEST_EXTERN)
