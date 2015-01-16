@@ -26,4 +26,13 @@ TEST(eigen_utilities, basic_check)
     {
         std::cout << ex.what() << std::endl;
     }
+    // Print out error
+    try
+    {
+        assert_size_matrix(X, 8, 4);
+    }
+    catch (eigen_utilities::assert_error &ex)
+    {
+        std::cout << ex.what() << std::endl;
+    }
 }
