@@ -60,6 +60,23 @@ void select_grid_resize(const Eigen::MatrixBase<DerivedA> &in, const ContainerA 
     select_grid(in, rows, cols, out);
 }
 
+
+template<typename DerivedA, typename DerivedB, typename Container>
+void select_rows_reverse(const Eigen::MatrixBase<DerivedA> &in, const Container &indices, Eigen::MatrixBase<DerivedB> &out)
+{
+    assert_size(in, indices.size(), in.cols());
+    for (int i = 0; i < indices.size(); ++i)
+        out.row(indices[i]) = in.row(i);
+}
+
+template<typename DerivedA, typename DerivedB, typename Container>
+void select_cols_reverse(const Eigen::MatrixBase<DerivedA> &in, const Container &indices, Eigen::MatrixBase<DerivedB> &out)
+{
+    assert_size(in, in.rows(), indices.size());
+    for (int i = 0; i < indices.size(); ++i)
+        out.col(indices[i]) = in.col(i);
+}
+
 }
 
 #endif // EIGEN_UTILITIES_CONTAINER_UTILITIES_H
