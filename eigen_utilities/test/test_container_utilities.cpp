@@ -46,6 +46,19 @@ TEST(eigen_utilities_test, select_vector)
         select_cols_resize(in.transpose(), indices, actual);
         EXPECT_EQ(expected.transpose(), actual);
     }
+
+    // Reverse
+    {
+        Eigen::VectorXi indices(5);
+        indices << 9, 8, 7, 6, 5;
+        Eigen::VectorXd rev_expected(10);
+        rev_expected << 0, 0, 0, 0, 0, 40, 30, 20, 10, 0;
+
+        Eigen::VectorXd actual(rev_expected.size());
+        actual.setZero();
+        select_rows_reverse(in, indices, actual);
+        EXPECT_EQ(rev_expected, actual);
+    }
 }
 
 TEST(eigen_utilities_test, select_matrix)
