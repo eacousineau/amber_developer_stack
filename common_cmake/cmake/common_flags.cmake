@@ -3,7 +3,7 @@
 # @author Dr. John D. Yamakoski
 # @author Brian Wightman
 
-option(DISABLE_VECTORIZATION "Disable vectorization for Eigen (necesssary for running valgrind benchmarks)" OFF)
+option(DISABLE_VECTORIZATION "Disable vectorization for Eigen (necesssary for running valgrind benchmarks)" ON)
 
 macro(common_add_vectorization_flags)
   if(NOT DISABLE_VECTORIZATION)
