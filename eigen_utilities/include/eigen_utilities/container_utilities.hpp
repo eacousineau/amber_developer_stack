@@ -77,6 +77,24 @@ void select_cols_reverse(const Eigen::MatrixBase<DerivedA> &in, const Container 
         out.col(indices[i]) = in.col(i);
 }
 
+
+template<typename DerivedA, typename DerivedB, typename ContainerA, typename ContainerB>
+void select_rows(const Eigen::MatrixBase<DerivedA> &in, const ContainerA &in_indices, Eigen::MatrixBase<DerivedB> &out, const ContainerB &out_indices)
+{
+    assert_size_vector(out_indices, in_indices.size());
+    for (int i = 0; i < in_indices.size(); ++i)
+        out.row(out_indices[i]) = in.row(in_indices[i]);
+}
+
+
+template<typename DerivedA, typename DerivedB, typename ContainerA, typename ContainerB>
+void select_cols(const Eigen::MatrixBase<DerivedA> &in, const ContainerA &in_indices, Eigen::MatrixBase<DerivedB> &out, const ContainerB &out_indices)
+{
+    assert_size_vector(out_indices, in_indices.size());
+    for (int i = 0; i < in_indices.size(); ++i)
+        out.col(out_indices[i]) = in.col(in_indices[i]);
+}
+
 }
 
 #endif // EIGEN_UTILITIES_CONTAINER_UTILITIES_H
