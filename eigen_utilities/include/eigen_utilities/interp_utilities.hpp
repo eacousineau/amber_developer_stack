@@ -7,6 +7,7 @@
 
 #include <Eigen/Dense>
 
+#include <vector>
 #include <eigen_utilities/assert_size.hpp>
 
 namespace eigen_utilities
@@ -44,31 +45,36 @@ T find_lower_index(const Container &data, const T &value, bool do_saturate = fal
     }
 }
 
+template<typename ZType>
 class BilinearInterp
 {
 public:
     Eigen::VectorXd xs;
     Eigen::VectorXd ys;
-    Eigen::MatrixXd zs;
+    std::vector<std::vector<ZType> > zs;
+private:
+    ZType q11;
+    ZType q21;
+    ZType q12;
+    ZType q22;
+    ZType r1;
+    ZType r2;
+    ZType z;
 public:
-    inline BilinearInterp(const Eigen::VectorXd &x, const Eigen::VectorXd &y, const Eigen::MatrixXd &z)
-        : xs(x), ys(y), zs(z)
-    {
-        check();
-    }
     void check()
     {
         common_assert(xs.size() > 0);
         common_assert(ys.size() > 0);
-        assert_size_matrix(zs, xs.size(), ys.size());
+        common_assert_msg(zs.size() == xs.size(), "Bad tensor x-size: " << zs.size() << " != " << xs.size());
+        for (int i = 0; i < zs.size(); ++i)
+            common_assert_msg(zs[i].size() == ys.size(), "Bad tensor y-size at [" << i << "]: " << zs[i].size() << " != " << ys.size());
     }
 
-    inline double eval(double x, double y, bool do_saturate = false) const
+    inline const ZType& eval(double x, double y, bool do_saturate = false)
     {
-        common_assert(xs.size() > 0);
-        common_assert(ys.size() > 0);
-        assert_size_matrix(zs, xs.size(), ys.size());
-
+//        common_assert(xs.size() > 0);
+//        common_assert(ys.size() > 0);
+//        assert_size_matrix(zs, xs.size(), ys.size());
         // http://en.wikipedia.org/wiki/Bilinear_interpolation
         if (do_saturate)
         {
@@ -87,16 +93,68 @@ public:
         double xu = xs(x_index + 1);
         double yl = ys(y_index);
         double yu = ys(y_index + 1);
-        double q11 = zs(x_index, y_index);
-        double q21 = zs(x_index + 1, y_index);
-        double q12 = zs(x_index, y_index + 1);
-        double q22 = zs(x_index + 1, y_index + 1);
-        double r1 = (xu - x) / (xu - xl) * q11 + (x - xl) / (xu - xl) * q21;
-        double r2 = (xu - x) / (xu - xl) * q12 + (x - xl) / (xu - xl) * q22;
-        double z = (yu - y) / (yu - yl) * r1 + (y - yl) / (yu - yl) * r2;
+        q11 = zs[x_index][y_index];
+        q21 = zs[x_index + 1][y_index];
+        q12 = zs[x_index][y_index + 1];
+        q22 = zs[x_index + 1][y_index + 1];
+        r1 = (xu - x) / (xu - xl) * q11 + (x - xl) / (xu - xl) * q21;
+        r2 = (xu - x) / (xu - xl) * q12 + (x - xl) / (xu - xl) * q22;
+        z = (yu - y) / (yu - yl) * r1 + (y - yl) / (yu - yl) * r2;
         return z;
     }
 };
+
+//class MatrixBilinearInterp
+//{
+//public:
+//    Eigen::VectorXd xs;
+//    Eigen::VectorXd ys;
+//    std::vector<std::vector<Eigen::MatrixXd> > zs;
+//private:
+//    Eigen::MatrixXd Z;
+//    std::vector<std::vector<BilinearInterp> > interps;
+//public:
+//    void checkAndInit()
+//    {
+//        common_assert(xs.size() > 0);
+//        common_assert(ys.size() > 0);
+//        common_assert_msg(zs.size() == xs.size(), "Bad tensor x-size: " << zs.size() << " != " << xs.size());
+//        int rows = -1;
+//        int cols = -1;
+//        for (int i = 0; i < zs.size(); ++i)
+//        {
+//            common_assert_msg(zs[i].size() == ys.size(), "Bad tensor y-size at [" << i << "]: " << zs[i].size() << " != " << ys.size());
+//            for (int j = 0; j < zs[i].size(); ++j)
+//            {
+//                if (rows == -1 && cols == -1)
+//                    assert_size_matrix(zs[i][j], rows, cols);
+//                else
+//                {
+//                    rows = zs[i][j].rows();
+//                    cols = zs[i][j].cols();
+//                    Z.resize(rows, cols);
+//                }
+//            }
+//        }
+//        std::vector<std::vector<BilinearInterp> > interp_row;
+//        Eigen::MatrixXd blank(xs.size(), ys.size());
+//        interp_row.assign(cols, BilinearInterp(xs, ys, blank));
+//        interps.assign(rows, interp_row);
+//        for (int ix = 0; ix < xs.size(); ++ix)
+//        {
+//            for (int iy = 0; iy < ys.size(); ++iy)
+//            {
+//                for (int ir = 0; ir < rows; ++ ir)
+//                {
+//                    for (int ij = 0; ij < cols; ++ ij)
+//                    {
+//                        interps[ir][ij].zs(ix, iy) = zs[ix][iy](ir, ij);
+//                    }
+//                }
+//            }
+//        }
+//    }
+//};
 
 }
 

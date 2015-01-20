@@ -16,10 +16,7 @@ TEST(eigen_utilities_test, basic_interp)
     xs << 0, 1;
     Eigen::VectorXd ys(3);
     ys << 0, 1, 2;
-    Eigen::MatrixXd zs(2, 3);
-    zs <<
-         0, 1, 2,
-         3, 4, 5;
+    std::vector<std::vector<double> > zs = {{0, 1, 2}, {3, 4, 5}};
 
     EXPECT_EQ(0, find_lower_index(xs, 0));
     EXPECT_EQ(-1, find_lower_index(xs, -1));
@@ -28,7 +25,10 @@ TEST(eigen_utilities_test, basic_interp)
     EXPECT_EQ(1, find_lower_index(ys, 2));
 
 //    EXPECT_NO_THROW({
-    BilinearInterp interp(xs, ys, zs);
+    BilinearInterp<double> interp;
+    interp.xs = xs;
+    interp.ys = ys;
+    interp.zs = zs;
     EXPECT_EQ(0, interp.eval(0, 0));
     EXPECT_EQ(5, interp.eval(1, 2));
     EXPECT_EQ(5, interp.eval(5, 5, true));

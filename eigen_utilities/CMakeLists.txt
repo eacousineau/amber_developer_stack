@@ -33,6 +33,7 @@ catkin_package(
 #############
 ## Options ##
 #############
+add_definitions(-std=c++0x)
 
 option(EIGEN_UTILITIES_TEST_EXTERN "Enable testing of compiling separate translation units / source files with different preprocessor flags" OFF)
 option(EIGEN_UTILITIES_NDEBUG "Disable debug information" OFF)
