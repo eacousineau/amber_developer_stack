@@ -80,10 +80,10 @@ public:
         {
             double xmin = xs(0);
             double xmax = xs(xs.size() - 1);
-            x = std::max(std::min(x, xmin), xmax);
+            x = std::min(std::max(x, xmin), xmax);
             double ymin = ys(0);
             double ymax = ys(ys.size() - 1);
-            y = std::max(std::min(y, ymin), ymax);
+            y = std::min(std::max(y, ymin), ymax);
         }
         int x_index = find_lower_index(xs, x);
         int y_index = find_lower_index(ys, y);
