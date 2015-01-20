@@ -33,6 +33,7 @@ catkin_package(
 #############
 ## Options ##
 #############
+add_definitions(-std=c++0x)
 
 option(EIGEN_UTILITIES_TEST_EXTERN "Enable testing of compiling separate translation units / source files with different preprocessor flags" OFF)
 option(EIGEN_UTILITIES_NDEBUG "Disable debug information" OFF)
@@ -67,6 +68,7 @@ set(TEST_SRCS
   test/test_compare_utilities.cpp
   test/test_container_utilities.cpp
   test/test_operator_utilities.cpp
+  test/test_interp_utilities.cpp
 )
 
 if(EIGEN_UTILITIES_TEST_EXTERN)
