@@ -67,6 +67,7 @@ set(TEST_SRCS
   test/test_compare_utilities.cpp
   test/test_container_utilities.cpp
   test/test_operator_utilities.cpp
+  test/test_interp_utilities.cpp
 )
 
 if(EIGEN_UTILITIES_TEST_EXTERN)
