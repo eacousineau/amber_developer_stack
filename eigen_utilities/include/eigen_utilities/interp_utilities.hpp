@@ -70,6 +70,12 @@ public:
             common_assert_msg(zs[i].size() == ys.size(), "Bad tensor y-size at [" << i << "]: " << zs[i].size() << " != " << ys.size());
     }
 
+    inline const ZType& eval(const Eigen::VectorXd &v, bool do_saturate = false)
+    {
+        assert_size_vector(v, 2);
+        return eval(v(0), v(1), do_saturate);
+    }
+
     inline const ZType& eval(double x, double y, bool do_saturate = false)
     {
 //        common_assert(xs.size() > 0);
