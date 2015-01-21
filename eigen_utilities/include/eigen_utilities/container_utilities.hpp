@@ -17,7 +17,11 @@ void select_rows(const Eigen::MatrixBase<DerivedA> &in, const Container &indices
 {
     assert_size(out, indices.size(), in.cols());
     for (int i = 0; i < indices.size(); ++i)
-        out.row(i) = in.row(indices[i]);
+    {
+        int ix = indices[i];
+        common_assert_msg(ix >= 0 && ix < in.rows(), "ix: " << ix << ", in: " << in.rows());
+        out.row(i) = in.row(ix);
+    }
 }
 
 template<typename DerivedA, typename DerivedB, typename Container>
@@ -32,7 +36,11 @@ void select_cols(const Eigen::MatrixBase<DerivedA> &in, const Container &indices
 {
     assert_size(out, in.rows(), indices.size());
     for (int i = 0; i < indices.size(); ++i)
-        out.col(i) = in.col(indices[i]);
+    {
+        int ix = indices[i];
+        common_assert_msg(ix >= 0 && ix < in.cols(), "ix: " << ix << ", in: " << in.cols());
+        out.col(i) = in.col(ix);
+    }
 }
 
 template<typename DerivedA, typename DerivedB, typename Container>
@@ -66,7 +74,11 @@ void select_rows_reverse(const Eigen::MatrixBase<DerivedA> &in, const Container 
 {
     assert_size(in, indices.size(), in.cols());
     for (int i = 0; i < indices.size(); ++i)
-        out.row(indices[i]) = in.row(i);
+    {
+        int ox = indices[i];
+        common_assert_msg(ox >= 0 && ox < out.rows(), "ox: " << ox << ", out: " << out.rows());
+        out.row(ox) = in.row(i);
+    }
 }
 
 template<typename DerivedA, typename DerivedB, typename Container>
@@ -74,7 +86,11 @@ void select_cols_reverse(const Eigen::MatrixBase<DerivedA> &in, const Container 
 {
     assert_size(in, in.rows(), indices.size());
     for (int i = 0; i < indices.size(); ++i)
-        out.col(indices[i]) = in.col(i);
+    {
+        int ox = indices[i];
+        common_assert_msg(ox >= 0 && ox < out.cols(), "ox: " << ox << ", out: " << out.cols());
+        out.col() = in.col(i);
+    }
 }
 
 
@@ -83,7 +99,13 @@ void select_rows(const Eigen::MatrixBase<DerivedA> &in, const ContainerA &in_ind
 {
     assert_size_vector(out_indices, in_indices.size());
     for (int i = 0; i < in_indices.size(); ++i)
-        out.row(out_indices[i]) = in.row(in_indices[i]);
+    {
+        int ix = in_indices[i];
+        int ox = out_indices[i];
+        common_assert_msg(ix >= 0 && ix < in.rows(), "ix: " << ix << ", in: " << in.rows());
+        common_assert_msg(ox >= 0 && ox < out.rows(), "ox: " << ox << ", out: " << out.rows());
+        out.row(ox) = in.row(ix);
+    }
 }
 
 
@@ -92,7 +114,13 @@ void select_cols(const Eigen::MatrixBase<DerivedA> &in, const ContainerA &in_ind
 {
     assert_size_vector(out_indices, in_indices.size());
     for (int i = 0; i < in_indices.size(); ++i)
-        out.col(out_indices[i]) = in.col(in_indices[i]);
+    {
+        int ix = in_indices[i];
+        int ox = out_indices[i];
+        common_assert_msg(ix >= 0 && ix < in.cols(), "ix: " << ix << ", in: " << in.cols());
+        common_assert_msg(ox >= 0 && ox < out.cols(), "ox: " << ox << ", out: " << out.cols());
+        out.col(ox) = in.col(ix);
+    }
 }
 
 }
