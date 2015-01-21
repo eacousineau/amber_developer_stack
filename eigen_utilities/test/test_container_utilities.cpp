@@ -4,9 +4,11 @@
  */
 #include <gtest/gtest.h>
 
+#include <iostream>
 #include <vector>
 #include <eigen_utilities/container_utilities.hpp>
 
+using namespace std;
 using namespace Eigen;
 using namespace eigen_utilities;
 
@@ -88,6 +90,17 @@ TEST(eigen_utilities_test, select_matrix)
         EXPECT_THROW(select_rows(in, rows, actual), eigen_utilities::assert_error);
         EXPECT_NO_THROW(select_rows_resize(in, rows, actual));
         EXPECT_EQ(expected_rows, actual);
+        Eigen::VectorXi rows_bad(2);
+        rows_bad << 0, 5;
+        try
+        {
+            select_rows(in, rows_bad, actual);
+            EXPECT_TRUE(false);
+        }
+        catch (const common::assert_error &e)
+        {
+            cout << e.what() << endl;
+        }
     }
     
     
@@ -111,6 +124,18 @@ TEST(eigen_utilities_test, select_matrix)
         EXPECT_THROW(select_cols(in, cols, actual), eigen_utilities::assert_error);
         EXPECT_NO_THROW(select_cols_resize(in, cols, actual));
         EXPECT_EQ(expected_cols, actual);
+
+        Eigen::VectorXi cols_bad(2);
+        cols_bad << 0, 5;
+        try
+        {
+            select_cols(in, cols_bad, actual);
+            EXPECT_TRUE(false);
+        }
+        catch (const common::assert_error &e)
+        {
+            cout << e.what() << endl;
+        }
     }
     
     Eigen::MatrixXd expected_grid(rows.size(), cols.size());
