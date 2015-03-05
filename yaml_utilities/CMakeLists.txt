@@ -10,11 +10,11 @@ find_package(catkin REQUIRED COMPONENTS
   common_cmake
   common_assert
   stl_utilities
+  yaml_cpp_0_2_7
 )
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system filesystem)
-find_package(yaml-cpp REQUIRED)
 
 ###################################
 ## catkin specific configuration ##
@@ -27,8 +27,8 @@ find_package(yaml-cpp REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include ${Boost_INCLUDE_DIRS}
-  LIBRARIES yaml_utilities ${Boost_LIBRARIES} ${YAMLCPP_LIBRARY}
-  CATKIN_DEPENDS common_cmake common_assert stl_utilities
+  LIBRARIES yaml_utilities ${Boost_LIBRARIES}
+  CATKIN_DEPENDS common_cmake common_assert stl_utilities yaml_cpp_0_2_7
 )
 
 ###########
@@ -41,7 +41,6 @@ include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
-  ${YAMLCPP_INCLUDE_DIR}
 )
 
 ## Declare a cpp library
@@ -54,7 +53,6 @@ add_library(yaml_utilities
 target_link_libraries(yaml_utilities
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
-  ${YAMLCPP_LIBRARY}
 )
 
 #############
