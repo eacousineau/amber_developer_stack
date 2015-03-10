@@ -82,6 +82,10 @@ echo "[ Rename Package: '$from' -> '$to' ]"
 files="$(find "$dir" $prune_flags -o \( $name_flags \) -print)"
 echo "[ Text Replacement for Patterns: $patterns ]"
 sed -i "s#\b$from\b#$to#g" $files
+from_cap=${from^^}
+to_cap=${to^^}
+echo "[ - All Cap: '$from_cap' -> '$to_cap' ]"
+sed -i "s#\b$from\b#$to#g" $files
 
 # Next rename directories
 echo "[ Rename Directories ]"
