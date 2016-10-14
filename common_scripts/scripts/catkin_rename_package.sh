@@ -58,7 +58,7 @@ to="$3"
 
 # File type / name flags - implementing implode functionality :/
 # python -c 'print " -o ".join(map(lambda x: "-name " + x, ["*.cpp", "*.hpp"]))'
-patterns='*.cpp *.hpp *.h *.c *.m *.py package.xml CMakeLists.txt *.cmake *.sh'
+patterns='*.cpp *.hpp *.h *.c *.m *.py package.xml CMakeLists.txt *.cmake *.sh *.tex'
 name_flags=""
 for pattern in $patterns
 do
