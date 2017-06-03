@@ -58,7 +58,7 @@ to="$3"
 
 # File type / name flags - implementing implode functionality :/
 # python -c 'print " -o ".join(map(lambda x: "-name " + x, ["*.cpp", "*.hpp"]))'
-patterns='*.cpp *.hpp *.h *.c *.m *.py package.xml CMakeLists.txt *.cmake *.sh'
+patterns='*.cpp *.hpp *.h *.c *.m *.py package.xml CMakeLists.txt *.cmake *.sh *.tex'
 name_flags=""
 for pattern in $patterns
 do
@@ -81,6 +81,10 @@ echo "[ Rename Package: '$from' -> '$to' ]"
 # @todo http://stackoverflow.com/questions/8677546/bash-for-in-looping-on-null-delimited-string-variable
 files="$(find "$dir" $prune_flags -o \( $name_flags \) -print)"
 echo "[ Text Replacement for Patterns: $patterns ]"
+sed -i "s#\b$from\b#$to#g" $files
+from_cap=${from^^}
+to_cap=${to^^}
+echo "[ - All Cap: '$from_cap' -> '$to_cap' ]"
 sed -i "s#\b$from\b#$to#g" $files
 
 # Next rename directories

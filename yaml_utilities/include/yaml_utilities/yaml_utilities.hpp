@@ -7,8 +7,12 @@
 #define _COMMON_YAML_UTILITIES_HPP_
 
 #include <ostream>
-#include <yaml-cpp/yaml.h>
+#include <yaml-cpp-0.2.7/yaml.h>
 #include <boost/filesystem.hpp>
+
+#ifndef YAML_UTITILIES_NO_ALIAS
+#define YAML YAML_0_2_7
+#endif
 
 namespace yaml_utilities
 {
