@@ -1,6 +1,10 @@
 # `amber_developer_stack`
 
-Provide generate utilities for development in Catkin and C++.
+Provide general utilities for development in Catkin and C++.
+
+# Note
+
+These were developed under Ubuntu 12.04, as such will break with YAML > 0.2.7.
 
 # Dependencies
 
