@@ -14,4 +14,5 @@ class Custom(TextProcessor):
     def process(self, oldText):
         return oldText.replace(self.args.a, self.args.temp).replace(self.args.b, self.args.a).replace(self.args.temp, self.args.b)
 
-Custom().main()
+if __name__ == "__main__":
+    Custom().main()

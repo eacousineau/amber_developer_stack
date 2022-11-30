@@ -23,25 +23,25 @@ $LONG_USAGE
 
 usage()
 {
-	echo "$OPTIONS_SPEC" >&2
-	exit ${1-0}
+    echo "$OPTIONS_SPEC" >&2
+    exit ${1-0}
 }
 
 while [[ $# -gt 0 ]]
 do
-	case "$1" in
-	-h|--help)
-		usage
-		;;
-	-*)
-		echo "error: Invalid option: $1"
-		usage 1
-		;;
-	*)
-		break
-		;;
-	esac
-	shift
+    case "$1" in
+    -h|--help)
+        usage
+        ;;
+    -*)
+        echo "error: Invalid option: $1"
+        usage 1
+        ;;
+    *)
+        break
+        ;;
+    esac
+    shift
 done
 
 [[ $# -ne 3 ]] && { echo "error: Invalid arguments: $@" >&2; usage 1; }
@@ -62,8 +62,8 @@ patterns='*.cpp *.hpp *.h *.c *.m *.py package.xml CMakeLists.txt *.cmake *.sh *
 name_flags=""
 for pattern in $patterns
 do
-	flag="-name $pattern"
-	[[ -z "$name_flags" ]] && name_flags="$flag" || name_flags="$name_flags -o $flag"
+    flag="-name $pattern"
+    [[ -z "$name_flags" ]] && name_flags="$flag" || name_flags="$name_flags -o $flag"
 done
 
 # Prune flags
@@ -71,8 +71,8 @@ prunes='*/build */.git'
 prune_flags=""
 for prune in $prunes
 do
-	flag="-path $prune -prune"
-	[[ -z "$prune_flags" ]] && prune_flags="$flag" || prune_flags="$prune_flags -o $flag"
+    flag="-path $prune -prune"
+    [[ -z "$prune_flags" ]] && prune_flags="$flag" || prune_flags="$prune_flags -o $flag"
 done
 
 echo "[ Rename Package: '$from' -> '$to' ]"
@@ -92,6 +92,6 @@ echo "[ Rename Directories ]"
 srcs="$(find "$dir" -name "$from" -type d | tac)"
 for src in $srcs
 do
-	dest="$(dirname $src)/$to"
-	mv "$src" "$dest"
+    dest="$(dirname $src)/$to"
+    mv "$src" "$dest"
 done
