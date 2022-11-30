@@ -37,7 +37,7 @@ class TextProcessor(object):
 			else:
 				outName = outFile.name
 			newText = self.process(oldText)
-			print >>sys.stderr, "[ {} -> {} ]".format(inFile.name, outName)
+			print("[ {} -> {} ]".format(inFile.name, outName), file=sys.stderr)
 			if not self.args.in_place or newText != oldText:
 				if outFile is None:
 					inFile.close()
@@ -46,9 +46,9 @@ class TextProcessor(object):
 				if self.args.extra_line:
 					outFile.write('\n')
 			else:
-				print >>sys.stderr, "\t<no changes>"
-		except IOError, e:
-			print >>sys.stderr, "Error: {}".format(e.msg)
+				print("\t<no changes>", file=sys.stderr)
+		except IOError as e:
+			print("Error: {}".format(e.msg), file=sys.stderr)
 	
 	def main(self, *args):
 		""" Do stuff """
